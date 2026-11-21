@@ -1,0 +1,3906 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="theme-roblox">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#060911" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LUAZ" />
+  <title>LUAZ • Scripts Roblox, Criação Visual & Chat Livre</title>
+
+  <style>
+    /* =========================================================================
+       1. DESIGN TOKENS & TEMAS (Roblox, Dark e Light)
+       ========================================================================= */
+    :root {
+      --bg-app: #070b14;
+      --bg-surface: #0d1424;
+      --bg-drawer: #0a101d;
+      --bg-card: #131d32;
+      --bg-card-hover: #1b2844;
+      --bg-input: #080d18;
+      --bg-code: #04070e;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(148, 163, 184, 0.16);
+      --border-strong: rgba(148, 163, 184, 0.3);
+      --accent-primary: #38bdf8;
+      --accent-secondary: #818cf8;
+      --accent-contrast: #03101c;
+      --badge-bg: rgba(56, 189, 248, 0.15);
+      --badge-text: #7dd3fc;
+      --success-bg: rgba(16, 185, 129, 0.16);
+      --success-text: #34d399;
+      --danger-bg: rgba(239, 68, 68, 0.18);
+      --danger-text: #f87171;
+      --error-line-bg: rgba(239, 68, 68, 0.24);
+      --error-line-border: #ef4444;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    html.theme-roblox {
+      --bg-app: #060911;
+      --bg-surface: #0e1523;
+      --bg-drawer: #0a0f1a;
+      --bg-card: #141e31;
+      --bg-card-hover: #1c2942;
+      --bg-input: #080d17;
+      --bg-code: #03050a;
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #7c8aa4;
+      --border-subtle: rgba(0, 229, 255, 0.22);
+      --border-strong: rgba(0, 229, 255, 0.45);
+      --accent-primary: #00e5ff;
+      --accent-secondary: #3b82f6;
+      --accent-contrast: #031018;
+      --badge-bg: rgba(0, 229, 255, 0.15);
+      --badge-text: #67f3ff;
+      --success-bg: rgba(0, 229, 255, 0.16);
+      --success-text: #00e5ff;
+      --danger-bg: rgba(255, 59, 92, 0.2);
+      --danger-text: #ff6b84;
+      --error-line-bg: rgba(255, 59, 92, 0.28);
+      --error-line-border: #ff3b5c;
+      --shadow-sm: 0 2px 10px rgba(0, 229, 255, 0.08);
+      --shadow-lg: 0 16px 38px rgba(0, 0, 0, 0.72);
+    }
+
+    html.theme-light {
+      --bg-app: #eef2f7;
+      --bg-surface: #ffffff;
+      --bg-drawer: #f8fafc;
+      --bg-card: #f1f5f9;
+      --bg-card-hover: #e2e8f0;
+      --bg-input: #e2e8f0;
+      --bg-code: #0f172a;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-subtle: rgba(15, 23, 42, 0.12);
+      --border-strong: rgba(15, 23, 42, 0.22);
+      --accent-primary: #0284c7;
+      --accent-secondary: #4f46e5;
+      --accent-contrast: #ffffff;
+      --badge-bg: rgba(2, 132, 199, 0.12);
+      --badge-text: #0369a1;
+      --success-bg: rgba(16, 185, 129, 0.14);
+      --success-text: #059669;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --danger-text: #dc2626;
+      --error-line-bg: rgba(239, 68, 68, 0.22);
+      --error-line-border: #ef4444;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 16px 34px rgba(15, 23, 42, 0.14);
+    }
+
+    /* =========================================================================
+       2. RESET & LAYOUT MOBILE-FIRST (SAMSUNG A30 / KODULAR WEBVIEW)
+       ========================================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: var(--font-sans);
+      background-color: var(--bg-app);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    button, input, textarea, select {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      transition: transform 0.12s ease, opacity 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 560px;
+      height: 100dvh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-app);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* =========================================================================
+       3. BARRA SUPERIOR LIMPA ('≡' + MODO ATIVO + STATUS API + 'LIMPAR')
+       ========================================================================= */
+    .top-header {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      z-index: 25;
+      flex-shrink: 0;
+    }
+
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .icon-square-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-square-btn:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--border-strong);
+    }
+
+    .neural-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .neural-badge.pulsing {
+      animation: pulseCore 1.25s infinite ease-in-out;
+    }
+
+    @keyframes pulseCore {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .header-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .header-subrow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-pill {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      white-space: nowrap;
+    }
+
+    .api-pill-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--success-text);
+      white-space: nowrap;
+    }
+
+    .api-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--success-text);
+    }
+
+    .header-title {
+      margin: 2px 0 0;
+      font-size: 13.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .clear-chat-btn {
+      height: 38px;
+      padding: 0 11px;
+      border-radius: 12px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 11.5px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .clear-chat-btn:hover {
+      background-color: var(--danger-bg);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: var(--danger-text);
+    }
+
+    /* =========================================================================
+       4. GAVETA LATERAL DO MENU '≡' (3 MODOS DEDICADOS + FERRAMENTAS + TEMAS)
+       ========================================================================= */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(3, 6, 12, 0.78);
+      z-index: 45;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .drawer-panel {
+      width: 85%;
+      max-width: 340px;
+      height: 100%;
+      background-color: var(--bg-drawer);
+      border-right: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .drawer-top {
+      padding: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .drawer-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .drawer-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mode-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mode-card-btn {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 14px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mode-card-btn.active {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border-color: transparent;
+      color: var(--accent-contrast);
+    }
+
+    .mode-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mode-card-btn:not(.active) .mode-card-icon {
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    .drawer-row-btn {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 13px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 12.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .drawer-row-btn:hover {
+      background-color: var(--bg-card-hover);
+    }
+
+    .drawer-row-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .theme-btn {
+      padding: 9px 6px;
+      border-radius: 11px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .theme-btn.active {
+      border-color: var(--accent-primary);
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    /* =========================================================================
+       5. ÁREA DO CHAT & TELA INICIAL POR MODO
+       ========================================================================= */
+    .chat-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scroll-behavior: smooth;
+    }
+
+    .empty-state {
+      margin: auto 0;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .empty-emblem {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, var(--bg-card), var(--bg-surface));
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .empty-title {
+      margin: 0;
+      font-size: 16.5px;
+      font-weight: 800;
+    }
+
+    .empty-desc {
+      margin: 5px 0 0;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      max-width: 350px;
+    }
+
+    .quick-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quick-card {
+      width: 100%;
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 14px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quick-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--border-strong);
+    }
+
+    .quick-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================================
+       6. MENSAGENS, IMAGENS, ROTEIROS DE VÍDEO, HISTÓRIAS & BOTÕES POR RESPOSTA
+       ========================================================================= */
+    .messages-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .msg-row {
+      display: flex;
+      width: 100%;
+    }
+
+    .msg-row.user {
+      justify-content: flex-end;
+    }
+
+    .msg-row.ai {
+      justify-content: flex-start;
+    }
+
+    .msg-bubble-user {
+      max-width: 84%;
+      padding: 11px 14px;
+      border-radius: 18px 18px 4px 18px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.48;
+      box-shadow: var(--shadow-sm);
+      word-wrap: break-word;
+    }
+
+    .msg-photo-thumb {
+      width: 100%;
+      max-height: 210px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: block;
+    }
+
+    .msg-file-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.24);
+      font-size: 11.5px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .msg-bubble-ai {
+      width: 100%;
+      max-width: 97%;
+      padding: 12px 13px;
+      border-radius: 18px 18px 18px 4px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 13px;
+      line-height: 1.55;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-body p {
+      margin: 0 0 8px;
+    }
+
+    .ai-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .inline-code {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .msg-link {
+      color: var(--badge-text);
+      text-decoration: underline;
+      word-break: break-all;
+    }
+
+    .generated-image-card {
+      margin: 6px 0;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+    }
+
+    .generated-image-preview {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+    }
+
+    .generated-image-footer {
+      padding: 9px 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 7px;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .story-bar {
+      margin-top: 4px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .msg-actions-bar {
+      padding-top: 9px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .msg-action-btn {
+      padding: 7px 10px;
+      border-radius: 10px;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .msg-action-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .msg-action-btn.speaking {
+      background-color: var(--badge-bg);
+      border-color: var(--accent-primary);
+      color: var(--badge-text);
+    }
+
+    .inline-retry-box {
+      padding: 10px;
+      border-radius: 12px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .inline-retry-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .inline-retry-input {
+      flex: 1;
+      min-width: 0;
+      height: 38px;
+      padding: 0 10px;
+      border-radius: 10px;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .inline-retry-submit {
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      font-size: 11.5px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* =========================================================================
+       7. ACORDEÃO RETRÁTIL DE SCRIPT (v QUANDO FECHADO / ^ QUANDO ABERTO)
+       ========================================================================= */
+    .script-accordion {
+      margin: 6px 0;
+      border-radius: 14px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      overflow: hidden;
+    }
+
+    .script-accordion-header {
+      width: 100%;
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background-color: var(--bg-surface);
+      text-align: left;
+    }
+
+    .script-accordion-header:hover {
+      background-color: var(--bg-card-hover);
+    }
+
+    .script-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .script-lang-badge {
+      padding: 3px 7px;
+      border-radius: 7px;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .script-title-wrap {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .script-title-text {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .script-lines-meta {
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: block;
+    }
+
+    .script-arrow-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .script-accordion-body {
+      border-top: 1px solid var(--border-subtle);
+      background-color: var(--bg-code);
+      color: #e2e8f0;
+    }
+
+    .script-toolbar {
+      padding: 8px 12px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .copy-script-btn {
+      padding: 6px 11px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .code-lines-container {
+      padding: 8px 0;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .code-line {
+      display: flex;
+      align-items: stretch;
+      padding: 1px 12px 1px 0;
+      border-left: 3px solid transparent;
+      min-height: 21px;
+      cursor: pointer;
+    }
+
+    .code-line.has-error {
+      background-color: var(--error-line-bg);
+      border-left-color: var(--error-line-border);
+    }
+
+    .code-line-num {
+      width: 36px;
+      padding-right: 10px;
+      text-align: right;
+      user-select: none;
+      color: #64748b;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .code-line.has-error .code-line-num {
+      color: #fca5a5;
+      font-weight: 800;
+    }
+
+    .code-line-text {
+      white-space: pre;
+      flex: 1;
+    }
+
+    .surgical-line-bar {
+      padding: 8px 10px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .surgical-line-num-input {
+      width: 64px;
+      height: 34px;
+      padding: 0 8px;
+      border-radius: 8px;
+      background-color: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: #f8fafc;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      outline: none;
+    }
+
+    .surgical-line-text-input {
+      flex: 1;
+      min-width: 0;
+      height: 34px;
+      padding: 0 9px;
+      border-radius: 8px;
+      background-color: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: #f8fafc;
+      font-size: 11.5px;
+      outline: none;
+    }
+
+    .surgical-line-btn {
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 8px;
+      background-color: var(--accent-primary);
+      color: var(--accent-contrast);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .script-error-footer {
+      padding: 9px 12px;
+      background-color: rgba(239, 68, 68, 0.16);
+      border-top: 1px solid rgba(239, 68, 68, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .fix-line-btn {
+      padding: 6px 10px;
+      border-radius: 9px;
+      background-color: #ef4444;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* =========================================================================
+       8. CHIPS RÁPIDOS POR MODO, POPUP '/', MENU '+' & COMPOSER INFERIOR
+       ========================================================================= */
+    .quick-chips-strip {
+      background-color: var(--bg-app);
+      border-top: 1px solid var(--border-subtle);
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+
+    .quick-chips-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mode-chip-pill {
+      padding: 6px 11px;
+      border-radius: 999px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .mode-chip-pill:hover {
+      border-color: var(--accent-primary);
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    .typing-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      width: fit-content;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .dot-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--accent-primary);
+      animation: bounceDot 1.2s infinite ease-in-out;
+    }
+
+    .dot-pulse:nth-child(2) { animation-delay: 0.15s; }
+    .dot-pulse:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .slash-popup {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-strong);
+      padding: 8px 12px;
+      max-height: 170px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 22;
+    }
+
+    .slash-item {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .plus-menu-popover {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-strong);
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      z-index: 23;
+    }
+
+    .plus-option-btn {
+      padding: 11px 8px;
+      border-radius: 12px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 11.5px;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .plus-option-btn:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent-primary);
+    }
+
+    .attachment-preview-bar {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      z-index: 22;
+    }
+
+    .composer-bar {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      padding: 8px 9px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 24;
+      flex-shrink: 0;
+    }
+
+    .composer-tool-btn {
+      height: 42px;
+      padding: 0 9px;
+      border-radius: 12px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .composer-tool-btn.recording {
+      background-color: var(--danger-bg);
+      border-color: #ef4444;
+      color: var(--danger-text);
+    }
+
+    .composer-tool-btn.live-active {
+      background-color: var(--success-bg);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: var(--success-text);
+    }
+
+    .composer-input {
+      flex: 1;
+      min-width: 0;
+      height: 42px;
+      padding: 0 11px;
+      border-radius: 12px;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .composer-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .send-btn {
+      height: 42px;
+      padding: 0 12px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================================
+       9. MODAIS, LIGHTBOX & OVERLAY AO VIVO
+       ========================================================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(3, 6, 12, 0.84);
+      z-index: 55;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    @media (min-width: 540px) {
+      .modal-backdrop {
+        align-items: center;
+      }
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 490px;
+      max-height: 88dvh;
+      overflow-y: auto;
+      border-radius: 22px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field-help {
+      margin: 0;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .text-field, .select-field, .textarea-field {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .textarea-field {
+      resize: vertical;
+      min-height: 76px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .primary-block-btn {
+      width: 100%;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .mini-chip-btn {
+      padding: 6px 10px;
+      border-radius: 9px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mini-chip-btn.accent {
+      background-color: var(--badge-bg);
+      border-color: var(--accent-primary);
+      color: var(--badge-text);
+    }
+
+    .saved-cmd-card {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(2, 5, 10, 0.92);
+      z-index: 70;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      gap: 14px;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 74dvh;
+      border-radius: 16px;
+      border: 1px solid var(--border-strong);
+      object-fit: contain;
+    }
+
+    .live-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: var(--bg-app);
+      z-index: 65;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 18px 28px;
+      text-align: center;
+    }
+
+    .live-orb-wrap {
+      position: relative;
+      width: 132px;
+      height: 132px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .live-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--accent-primary);
+      opacity: 0.45;
+      animation: liveWave 1.8s infinite ease-out;
+    }
+
+    .live-ring:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes liveWave {
+      0% { transform: scale(0.82); opacity: 0.75; }
+      100% { transform: scale(1.42); opacity: 0; }
+    }
+
+    .live-core {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--accent-contrast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast-pill {
+      position: fixed;
+      top: 62px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 80;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--accent-primary);
+      color: var(--text-primary);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: var(--shadow-lg);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- =====================================================================
+         1. BARRA SUPERIOR ('≡' + MODO ATIVO + STATUS API + 'LIMPAR')
+         ===================================================================== -->
+    <header class="top-header">
+      <div class="top-left">
+        <button id="openDrawerBtn" type="button" class="icon-square-btn" aria-label="Abrir menu" title="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+
+        <div id="neuralBadge" class="neural-badge" title="Núcleo LUAZ">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3"/><path d="M12 19v3"/><path d="M4.93 4.93l2.12 2.12"/><path d="M16.95 16.95l2.12 2.12"/>
+            <path d="M2 12h3"/><path d="M19 12h3"/><path d="M4.93 19.07l2.12-2.12"/><path d="M16.95 7.05l2.12-2.12"/>
+          </svg>
+        </div>
+
+        <div class="header-info">
+          <div class="header-subrow">
+            <span id="headerModePill" class="mode-pill">1 • Scripts & Roblox</span>
+            <span class="api-pill-status">
+              <span class="api-dot"></span>
+              <span>LUAZ • modo local</span>
+            </span>
+          </div>
+          <h1 id="headerTitle" class="header-title">Scripts & Roblox</h1>
+        </div>
+      </div>
+
+      <button id="clearConversationBtn" type="button" class="clear-chat-btn" title="Limpar conversa atual">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+        </svg>
+        <span>Limpar</span>
+      </button>
+    </header>
+
+    <!-- =====================================================================
+         2. GAVETA LATERAL DO MENU '≡' (3 MODOS DEDICADOS + FERRAMENTAS + TEMAS)
+         ===================================================================== -->
+    <div id="drawerBackdrop" class="drawer-backdrop hidden">
+      <aside class="drawer-panel" role="dialog" aria-label="Menu principal">
+        <div class="drawer-top">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="neural-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 2v3"/><path d="M12 19v3"/><path d="M2 12h3"/><path d="M19 12h3"/>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:800;">LUAZ</div>
+              <div style="font-size:11px;color:var(--text-secondary);">Roblox • Visual • Chat</div>
+            </div>
+          </div>
+          <button id="closeDrawerBtn" type="button" class="mini-chip-btn" aria-label="Fechar menu">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="drawer-scroll">
+          <div>
+            <div class="drawer-label">Escolha o Modo</div>
+            <div class="mode-cards-stack">
+              <button id="drawerModeRoblox" type="button" class="mode-card-btn active">
+                <span class="mode-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"/>
+                    <polyline points="8 6 2 12 8 18"/>
+                  </svg>
+                </span>
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:12.5px;font-weight:800;">1. Scripts & Roblox</div>
+                  <div style="font-size:11px;opacity:0.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Jogos, Lua, Standalone e Sistemas</div>
+                </div>
+              </button>
+
+              <button id="drawerModeMedia" type="button" class="mode-card-btn">
+                <span class="mode-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </span>
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:12.5px;font-weight:800;">2. Imagens, Vídeos & Coisas</div>
+                  <div style="font-size:11px;opacity:0.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Criação Visual, Roteiros e Histórias</div>
+                </div>
+              </button>
+
+              <button id="drawerModeChat" type="button" class="mode-card-btn">
+                <span class="mode-card-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </span>
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:12.5px;font-weight:800;">3. Chat Livre</div>
+                  <div style="font-size:11px;opacity:0.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Peça de tudo, ideias, textos e dúvidas</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="drawer-label">Ferramentas</div>
+
+            <button id="drawerCommandsBtn" type="button" class="drawer-row-btn">
+              <span class="drawer-row-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="21" x2="17" y2="3"/></svg>
+                <span>Comandos Salvos ( / )</span>
+              </span>
+              <span id="drawerCmdCount" class="mode-pill">0</span>
+            </button>
+
+            <button id="drawerLiveBtn" type="button" class="drawer-row-btn">
+              <span class="drawer-row-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                <span>Voz em Tempo Real</span>
+              </span>
+              <span style="font-size:11px;color:var(--success-text);font-weight:800;">Ao Vivo</span>
+            </button>
+
+            <button id="drawerSettingsBtn" type="button" class="drawer-row-btn">
+              <span class="drawer-row-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+                <span>Configurações & API</span>
+              </span>
+              <span class="mode-pill">Pendente</span>
+            </button>
+
+            <button id="drawerInstallBtn" type="button" class="drawer-row-btn">
+              <span class="drawer-row-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Guia APK (GitHub + Kodular)</span>
+              </span>
+            </button>
+          </div>
+
+          <div>
+            <div class="drawer-label">Tema Visual</div>
+            <div class="theme-grid">
+              <button type="button" class="theme-btn active" data-theme-choice="roblox">Roblox</button>
+              <button type="button" class="theme-btn" data-theme-choice="dark">Dark</button>
+              <button type="button" class="theme-btn" data-theme-choice="light">Light</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- =====================================================================
+         3. ÁREA CENTRAL DO CHAT
+         ===================================================================== -->
+    <main id="chatViewport" class="chat-viewport">
+      <div id="emptyStateView" class="empty-state">
+        <div id="emptyEmblem" class="empty-emblem"></div>
+        <div>
+          <h2 id="emptyTitle" class="empty-title">Scripts & Roblox</h2>
+          <p id="emptyDesc" class="empty-desc"></p>
+        </div>
+        <div id="quickList" class="quick-list"></div>
+      </div>
+
+      <div id="messagesStack" class="messages-stack hidden"></div>
+
+      <div id="typingRow" class="typing-row hidden">
+        <span class="dot-pulse"></span>
+        <span class="dot-pulse"></span>
+        <span class="dot-pulse"></span>
+        <span id="typingLabel">Pensando...</span>
+      </div>
+    </main>
+
+    <!-- Chips rápidos adaptados ao modo ativo -->
+    <div id="quickChipsStrip" class="quick-chips-strip"></div>
+
+    <!-- Popup de comandos '/' -->
+    <div id="slashPopup" class="slash-popup hidden"></div>
+
+    <!-- Menu '+' (Câmera, Galeria/Imagens, Arquivos) -->
+    <div id="plusMenuPopover" class="plus-menu-popover hidden">
+      <button id="plusCameraBtn" type="button" class="plus-option-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span>Câmera</span>
+      </button>
+
+      <button id="plusGalleryBtn" type="button" class="plus-option-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <span>Galeria / Imagens</span>
+      </button>
+
+      <button id="plusFileBtn" type="button" class="plus-option-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <span>Arquivos</span>
+      </button>
+    </div>
+
+    <!-- Inputs ocultos para câmera, galeria e arquivos -->
+    <input id="cameraCaptureInput" type="file" accept="image/*" capture="environment" class="hidden" />
+    <input id="galleryImageInput" type="file" accept="image/*" class="hidden" />
+    <input id="docFileInput" type="file" accept=".lua,.txt,.js,.ts,.jsx,.tsx,.py,.html,.css,.json,.md,.csv,.xml,.yaml,.yml,text/*" class="hidden" />
+
+    <!-- Prévia de anexo -->
+    <div id="attachmentPreviewBar" class="attachment-preview-bar hidden">
+      <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+        <img id="attachThumbImg" src="" alt="Prévia da imagem" class="hidden" style="width:42px;height:42px;border-radius:10px;object-fit:cover;border:1px solid var(--border-strong);flex-shrink:0;" />
+        <div id="attachFileBadge" class="hidden" style="width:42px;height:42px;border-radius:10px;background:var(--badge-bg);color:var(--badge-text);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div style="min-width:0;">
+          <div id="attachNameText" style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">arquivo</div>
+          <div id="attachKindText" style="font-size:11px;color:var(--text-secondary);">Pronto para enviar</div>
+        </div>
+      </div>
+      <button id="removeAttachmentBtn" type="button" class="mini-chip-btn" style="color:var(--danger-text);">Remover</button>
+    </div>
+
+    <!-- =====================================================================
+         4. BARRA INFERIOR ('+', FALAR, AO VIVO, INPUT, ENVIAR)
+         ===================================================================== -->
+    <form id="chatForm" class="composer-bar">
+      <button id="plusMenuBtn" type="button" class="composer-tool-btn" aria-label="Anexar câmera, imagem ou arquivo" title="Anexar (+)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+
+      <button id="dictateBtn" type="button" class="composer-tool-btn" aria-label="Falar para texto" title="Falar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+        </svg>
+        <span>Falar</span>
+      </button>
+
+      <button id="composerLiveBtn" type="button" class="composer-tool-btn live-active" title="Conversa contínua por voz">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 10v4"/><path d="M6 6v12"/><path d="M10 3v18"/><path d="M14 8v8"/><path d="M18 5v14"/><path d="M22 10v4"/>
+        </svg>
+        <span>Ao Vivo</span>
+      </button>
+
+      <input
+        id="chatInput"
+        type="text"
+        class="composer-input"
+        placeholder="Peça script Roblox ou /comando..."
+        autocomplete="off"
+      />
+
+      <button type="submit" class="send-btn" title="Enviar mensagem">
+        <span>Enviar</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <!-- =======================================================================
+       MODAL 1: COMANDOS PERSONALIZADOS ('/')
+       ======================================================================= -->
+  <div id="commandsModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Comandos Salvos ( / )</h3>
+        <button type="button" class="mini-chip-btn" data-close-modal="commandsModal">Fechar</button>
+      </div>
+      <p class="field-help">
+        Salve scripts Roblox, prompts de imagem, roteiros de vídeo ou ideias em um atalho (ex.: <strong>/fly_roblox</strong>). Digite <strong>/</strong> no chat para usar rápido.
+      </p>
+
+      <form id="commandForm" style="display:flex;flex-direction:column;gap:10px;">
+        <input type="hidden" id="editingCmdIndex" value="-1" />
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:8px;">
+          <div class="field-group">
+            <label class="field-label" for="cmdNameInput">Atalho</label>
+            <input id="cmdNameInput" type="text" class="text-field" placeholder="/meu_script" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cmdCategoryInput">Tipo</label>
+            <select id="cmdCategoryInput" class="select-field">
+              <option value="Roblox Script">Roblox Script</option>
+              <option value="Imagem">Imagem</option>
+              <option value="Vídeo">Roteiro Vídeo</option>
+              <option value="Chat Livre">Chat Livre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="cmdBodyInput">Conteúdo guardado</label>
+          <textarea id="cmdBodyInput" class="textarea-field" placeholder="Cole seu script Lua, prompt ou pedido..." required></textarea>
+        </div>
+
+        <div style="display:flex;gap:8px;">
+          <button type="submit" id="saveCommandSubmitBtn" class="primary-block-btn">Salvar Comando</button>
+          <button type="button" id="cancelEditCmdBtn" class="mini-chip-btn hidden" style="height:42px;padding:0 12px;">Cancelar</button>
+        </div>
+      </form>
+
+      <div class="field-group">
+        <span class="field-label">Seus comandos</span>
+        <div id="savedCommandsList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       MODAL 2: GUIA APK (GITHUB PAGES + KODULAR WEBVIEW)
+       ======================================================================= -->
+  <div id="installModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Guia APK (GitHub + Kodular)</h3>
+        <button type="button" class="mini-chip-btn" data-close-modal="installModal">Fechar</button>
+      </div>
+      <p class="field-help">
+        Este arquivo <strong>index.html</strong> já está pronto para hospedar no <strong>GitHub Pages (HTTPS)</strong> e empacotar como APK Android no <strong>Kodular</strong>.
+      </p>
+      <button id="triggerNativeInstallBtn" type="button" class="primary-block-btn hidden">
+        Instalar PWA Agora
+      </button>
+      <div style="padding:12px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border-subtle);">
+        <div style="font-size:12.5px;font-weight:800;margin-bottom:8px;">3 Passos para gerar o APK no celular:</div>
+        <ol style="margin:0;padding-left:18px;font-size:12px;color:var(--text-secondary);line-height:1.65;">
+          <li><strong>Salvar como index.html:</strong> Garanta que o arquivo na pasta Downloads esteja nomeado exatamente como <strong>index.html</strong> (sem números extras).</li>
+          <li><strong>GitHub Pages (HTTPS):</strong> Crie um repositório público no GitHub, envie o <strong>index.html</strong>, ative <strong>Settings → Pages</strong> e copie o link HTTPS gerado.</li>
+          <li><strong>Kodular WebView APK:</strong> Crie um projeto no Kodular, adicione o componente <strong>WebViewer</strong> ocupando a tela toda, cole o link HTTPS na <strong>Home URL</strong> e clique em <strong>Export → Android APK</strong>.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       MODAL 3: CONFIGURAÇÕES & API (PRÉ-CONFIGURADA + VOZ + MEMÓRIA)
+       ======================================================================= -->
+  <div id="settingsModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Configurações & API</h3>
+        <button type="button" class="mini-chip-btn" data-close-modal="settingsModal">Fechar</button>
+      </div>
+
+      <div class="field-group" style="padding:12px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border-subtle);">
+        <div class="field-label">Conexão com a IA</div>
+        <p class="field-help">A interface LUAZ está pronta para o Kodular. A conexão com a Gemini permanece desativada nesta versão; nenhuma chave secreta fica gravada no HTML ou no APK.</p>
+      </div>
+
+      <label style="padding:12px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;">
+        <div>
+          <div style="font-size:12.5px;font-weight:700;">Ler respostas em voz alta automaticamente</div>
+          <div class="field-help">Usa a voz pt-BR respeitando o volume de mídia do celular.</div>
+        </div>
+        <input id="autoReadToggle" type="checkbox" style="width:20px;height:20px;accent-color:var(--accent-primary);flex-shrink:0;" />
+      </label>
+
+      <label style="padding:12px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;">
+        <div>
+          <div style="font-size:12.5px;font-weight:700;">Enviar automaticamente após falar no microfone</div>
+          <div class="field-help">Envia o texto assim que termina o ditado por voz.</div>
+        </div>
+        <input id="autoSendVoiceToggle" type="checkbox" style="width:20px;height:20px;accent-color:var(--accent-primary);flex-shrink:0;" />
+      </label>
+
+      <div class="field-group" style="padding:12px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border-subtle);">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <span class="field-label">Preferências aprendidas pela IA</span>
+          <button id="clearMemoryBtn" type="button" class="mini-chip-btn" style="color:var(--danger-text);">Limpar</button>
+        </div>
+        <div id="learnedMemoryList" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       LIGHTBOX PARA VISUALIZAR IMAGEM EM TELA CHEIA
+       ======================================================================= -->
+  <div id="imageLightbox" class="lightbox-backdrop hidden">
+    <img id="lightboxImg" src="" alt="Imagem ampliada" class="lightbox-img" />
+    <div style="display:flex;gap:10px;">
+      <a id="lightboxDownloadLink" href="#" download="luaz-imagem.png" class="primary-block-btn" style="padding:0 16px;width:auto;text-decoration:none;">
+        Baixar PNG
+      </a>
+      <button id="closeLightboxBtn" type="button" class="mini-chip-btn" style="height:42px;padding:0 16px;font-size:12.5px;">
+        Fechar
+      </button>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       OVERLAY CONVERSA EM TEMPO REAL (AO VIVO)
+       ======================================================================= -->
+  <div id="liveOverlay" class="live-overlay hidden">
+    <div style="width:100%;max-width:480px;display:flex;align-items:center;justify-content:space-between;">
+      <span class="mode-pill" style="background:var(--success-bg);color:var(--success-text);padding:6px 12px;">
+        Ao Vivo • Tempo Real
+      </span>
+      <button id="closeLiveBtn" type="button" class="mini-chip-btn" style="color:var(--danger-text);padding:7px 12px;">
+        Encerrar
+      </button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;max-width:340px;">
+      <div class="live-orb-wrap">
+        <div class="live-ring"></div>
+        <div class="live-ring"></div>
+        <div class="live-core">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+          </svg>
+        </div>
+      </div>
+
+      <div>
+        <h3 id="liveStateHeading" style="margin:0;font-size:18px;font-weight:800;">Ouvindo você...</h3>
+        <p id="liveCaptionText" style="margin:8px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.5;min-height:44px;">
+          Fale o que deseja. Quando terminar, respondo em voz alta e volto a ouvir.
+        </p>
+      </div>
+    </div>
+
+    <button id="liveInterruptBtn" type="button" class="mini-chip-btn accent" style="height:42px;padding:0 16px;font-size:12.5px;">
+      Falar agora / Interromper
+    </button>
+  </div>
+
+  <div id="toastPill" class="toast-pill hidden">Pronto</div>
+
+  <!-- =======================================================================
+       JAVASCRIPT PURO (3 MODOS DEDICADOS, SCRIPTS ROBLOX, IMAGENS/VÍDEOS & CHAT LIVRE)
+       ======================================================================= -->
+  <script>
+    (function () {
+      "use strict";
+
+      const DEFAULT_API_KEY = "";
+
+      // ---------------------------------------------------------------------
+      // 1. MANIFEST PWA & INSTALAÇÃO (COMPATÍVEL COM GITHUB PAGES & WEBVIEW)
+      // ---------------------------------------------------------------------
+      try {
+        const iconSvg = encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">' +
+            '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+            '<stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#3b82f6"/>' +
+            '</linearGradient></defs>' +
+            '<rect width="512" height="512" rx="112" fill="url(#g)"/>' +
+            '<circle cx="256" cy="256" r="108" fill="none" stroke="#ffffff" stroke-width="26"/>' +
+            '<circle cx="256" cy="256" r="36" fill="#ffffff"/>' +
+          '</svg>'
+        );
+        const manifestBlob = new Blob(
+          [
+            JSON.stringify({
+              name: "LUAZ - Scripts Roblox, Criação Visual & Chat Livre",
+              short_name: "LUAZ",
+              start_url: ".",
+              display: "standalone",
+              background_color: "#060911",
+              theme_color: "#060911",
+              icons: [
+                {
+                  src: "data:image/svg+xml;utf8," + iconSvg,
+                  sizes: "512x512",
+                  type: "image/svg+xml",
+                  purpose: "any maskable"
+                }
+              ]
+            })
+          ],
+          { type: "application/manifest+json" }
+        );
+        const link = document.createElement("link");
+        link.rel = "manifest";
+        link.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(link);
+      } catch (_) {}
+
+      let deferredInstallPrompt = null;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        const btn = document.getElementById("triggerNativeInstallBtn");
+        if (btn) btn.classList.remove("hidden");
+      });
+
+      // ---------------------------------------------------------------------
+      // 2. ARMAZENAMENTO LOCAL (3 MODOS SEPARADOS + CHAVE PRÉ-CONFIGURADA)
+      // ---------------------------------------------------------------------
+      const STORAGE_KEYS = {
+        THEME: "neural_ia_v4_theme",
+        MODE: "neural_ia_v4_mode",
+        MESSAGES: "neural_ia_v4_messages",
+        COMMANDS: "neural_ia_v4_commands",
+        MEMORY: "neural_ia_v4_memory",
+        API_KEY: "luaz_api_key_pending",
+        AUTO_READ: "neural_ia_v4_autoread",
+        AUTO_SEND_VOICE: "neural_ia_v4_autosend_voice"
+      };
+
+      function readStore(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (_) {
+          return fallback;
+        }
+      }
+
+      function writeStore(key, val) {
+        try {
+          localStorage.setItem(key, JSON.stringify(val));
+        } catch (_) {}
+      }
+
+      let currentTheme = localStorage.getItem(STORAGE_KEYS.THEME) || "roblox";
+      const savedMode = localStorage.getItem(STORAGE_KEYS.MODE);
+      let currentMode = ["roblox", "media", "chat"].includes(savedMode) ? savedMode : "roblox";
+
+      let activeApiKey = "";
+
+      let autoReadEnabled = localStorage.getItem(STORAGE_KEYS.AUTO_READ) === "true";
+      let autoSendVoice = localStorage.getItem(STORAGE_KEYS.AUTO_SEND_VOICE) === "true";
+
+      let messagesByMode = readStore(STORAGE_KEYS.MESSAGES, {
+        roblox: [],
+        media: [],
+        chat: []
+      });
+      if (!Array.isArray(messagesByMode.roblox)) messagesByMode.roblox = [];
+      if (!Array.isArray(messagesByMode.media)) messagesByMode.media = [];
+      if (!Array.isArray(messagesByMode.chat)) messagesByMode.chat = [];
+
+      let savedCommands = readStore(STORAGE_KEYS.COMMANDS, [
+        {
+          name: "/roblox_standalone",
+          category: "Roblox Script",
+          body: "Crie um script Lua standalone para Roblox que ativa imediatamente ao ser executado, sem comandos de chat, com UI limpa e proteção contra erros."
+        },
+        {
+          name: "/roteiro_video",
+          category: "Vídeo",
+          body: "Crie um roteiro completo de vídeo curto com gancho nos primeiros 3 segundos, cenas visuais, narração e chamada final."
+        }
+      ]);
+      let learnedMemory = readStore(STORAGE_KEYS.MEMORY, []);
+      let attachedItem = null;
+      let speakingMsgId = null;
+      let openRetryMsgId = null;
+      const expandedScripts = {};
+      const codeStore = {};
+      const generatedImageStore = {};
+
+      function getCurrentMessages() {
+        return messagesByMode[currentMode];
+      }
+
+      function persistMessages() {
+        writeStore(STORAGE_KEYS.MESSAGES, messagesByMode);
+      }
+
+      // ---------------------------------------------------------------------
+      // 3. ÍCONES VETORIAIS SVG INLINE
+      // ---------------------------------------------------------------------
+      const SVG = {
+        code: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+        gamepad: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>',
+        zap: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+        image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
+        video: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+        story: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+        chat: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+        sparkles: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>',
+        file: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+        arrowDown: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
+        arrowUp: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>',
+        copy: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+        share: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+        speaker: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>',
+        stop: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>',
+        retry: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+        mic: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>',
+        alert: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+        download: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+      };
+
+      // ---------------------------------------------------------------------
+      // 4. REFERÊNCIAS DO DOM & UTILITÁRIOS
+      // ---------------------------------------------------------------------
+      const neuralBadge = document.getElementById("neuralBadge");
+      const headerModePill = document.getElementById("headerModePill");
+      const headerTitle = document.getElementById("headerTitle");
+      const drawerBackdrop = document.getElementById("drawerBackdrop");
+      const drawerModeRoblox = document.getElementById("drawerModeRoblox");
+      const drawerModeMedia = document.getElementById("drawerModeMedia");
+      const drawerModeChat = document.getElementById("drawerModeChat");
+      const drawerCmdCount = document.getElementById("drawerCmdCount");
+
+      const chatViewport = document.getElementById("chatViewport");
+      const emptyStateView = document.getElementById("emptyStateView");
+      const emptyEmblem = document.getElementById("emptyEmblem");
+      const emptyTitle = document.getElementById("emptyTitle");
+      const emptyDesc = document.getElementById("emptyDesc");
+      const quickList = document.getElementById("quickList");
+      const quickChipsStrip = document.getElementById("quickChipsStrip");
+      const messagesStack = document.getElementById("messagesStack");
+      const typingRow = document.getElementById("typingRow");
+      const typingLabel = document.getElementById("typingLabel");
+
+      const slashPopup = document.getElementById("slashPopup");
+      const plusMenuBtn = document.getElementById("plusMenuBtn");
+      const plusMenuPopover = document.getElementById("plusMenuPopover");
+      const cameraCaptureInput = document.getElementById("cameraCaptureInput");
+      const galleryImageInput = document.getElementById("galleryImageInput");
+      const docFileInput = document.getElementById("docFileInput");
+
+      const attachmentPreviewBar = document.getElementById("attachmentPreviewBar");
+      const attachThumbImg = document.getElementById("attachThumbImg");
+      const attachFileBadge = document.getElementById("attachFileBadge");
+      const attachNameText = document.getElementById("attachNameText");
+      const attachKindText = document.getElementById("attachKindText");
+      const removeAttachmentBtn = document.getElementById("removeAttachmentBtn");
+
+      const chatForm = document.getElementById("chatForm");
+      const dictateBtn = document.getElementById("dictateBtn");
+      const chatInput = document.getElementById("chatInput");
+      const toastPill = document.getElementById("toastPill");
+
+      let toastTimer = null;
+      function showToast(msg) {
+        toastPill.textContent = msg;
+        toastPill.classList.remove("hidden");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastPill.classList.add("hidden"), 2000);
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function copyText(text) {
+        try {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+          showToast("Copiado");
+        } catch (_) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => showToast("Copiado"));
+          }
+        }
+      }
+
+      function shareText(text) {
+        if (navigator.share) {
+          navigator.share({ title: "LUAZ", text }).catch(() => {});
+        } else {
+          copyText(text);
+          showToast("Copiado para compartilhar");
+        }
+      }
+
+      // ---------------------------------------------------------------------
+      // 5. TEMAS (Roblox, Dark, Light)
+      // ---------------------------------------------------------------------
+      function applyTheme(theme) {
+        const valid = ["roblox", "dark", "light"].includes(theme) ? theme : "roblox";
+        currentTheme = valid;
+        const root = document.documentElement;
+        root.classList.remove("theme-roblox", "theme-dark", "theme-light");
+        root.classList.add("theme-" + valid);
+        localStorage.setItem(STORAGE_KEYS.THEME, valid);
+
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", valid === "light" ? "#ffffff" : "#060911");
+
+        document.querySelectorAll("[data-theme-choice]").forEach((btn) => {
+          btn.classList.toggle("active", btn.getAttribute("data-theme-choice") === valid);
+        });
+      }
+
+      document.querySelectorAll("[data-theme-choice]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          applyTheme(btn.getAttribute("data-theme-choice"));
+          showToast("Tema atualizado");
+        });
+      });
+
+      // ---------------------------------------------------------------------
+      // 6. VOZ (FALAR -> TEXTO, OUVIR TTS & MODO AO VIVO)
+      // ---------------------------------------------------------------------
+      function cleanForSpeech(text) {
+        return String(text)
+          .replace(/```[\s\S]*?```/g, " Script exibido na tela. ")
+          .replace(/\[IMAGEM_GERADA:\s*[^\]]+\]/gi, " Imagem gerada na conversa. ")
+          .replace(/\[ERRO_LINHA:\s*\d+\]/gi, "")
+          .replace(/[*#_`~]/g, "")
+          .replace(/https?:\/\/\S+/g, " link na conversa ")
+          .trim();
+      }
+
+      function stopSpeech() {
+        if ("speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        speakingMsgId = null;
+        renderCurrentView();
+      }
+
+      function speakResponse(text, msgId, onDone) {
+        if (!("speechSynthesis" in window)) {
+          showToast("Voz não suportada neste navegador");
+          if (onDone) onDone();
+          return;
+        }
+        if (msgId && speakingMsgId === msgId) {
+          stopSpeech();
+          return;
+        }
+        window.speechSynthesis.cancel();
+        const cleaned = cleanForSpeech(text);
+        if (!cleaned) {
+          if (onDone) onDone();
+          return;
+        }
+
+        const utter = new SpeechSynthesisUtterance(cleaned);
+        utter.lang = "pt-BR";
+        utter.rate = 1.03;
+        speakingMsgId = msgId || "live";
+        renderCurrentView();
+
+        utter.onend = () => {
+          speakingMsgId = null;
+          renderCurrentView();
+          if (onDone) onDone();
+        };
+        utter.onerror = () => {
+          speakingMsgId = null;
+          renderCurrentView();
+          if (onDone) onDone();
+        };
+        window.speechSynthesis.speak(utter);
+      }
+
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      let activeDictation = null;
+
+      function runDictation(inputEl, onFinished) {
+        if (!SpeechRec) {
+          showToast("Microfone não suportado neste ambiente");
+          return;
+        }
+        if (activeDictation) {
+          try { activeDictation.stop(); } catch (_) {}
+          return;
+        }
+        const rec = new SpeechRec();
+        activeDictation = rec;
+        rec.lang = "pt-BR";
+        rec.interimResults = true;
+        rec.continuous = false;
+        let finalText = "";
+
+        rec.onstart = () => {
+          if (inputEl === chatInput) dictateBtn.classList.add("recording");
+          showToast("Fale agora...");
+        };
+        rec.onresult = (ev) => {
+          let interim = "";
+          for (let i = ev.resultIndex; i < ev.results.length; i++) {
+            const t = ev.results[i][0].transcript;
+            if (ev.results[i].isFinal) finalText += t;
+            else interim += t;
+          }
+          inputEl.value = (finalText || interim).trim();
+        };
+        rec.onerror = () => {
+          activeDictation = null;
+          dictateBtn.classList.remove("recording");
+        };
+        rec.onend = () => {
+          activeDictation = null;
+          dictateBtn.classList.remove("recording");
+          if (inputEl.value.trim() && onFinished) onFinished();
+        };
+
+        try {
+          rec.start();
+        } catch (_) {
+          activeDictation = null;
+        }
+      }
+
+      dictateBtn.addEventListener("click", () => {
+        runDictation(chatInput, () => {
+          if (autoSendVoice) chatForm.requestSubmit();
+        });
+      });
+
+      // Modo Ao Vivo contínuo
+      const liveOverlay = document.getElementById("liveOverlay");
+      const liveStateHeading = document.getElementById("liveStateHeading");
+      const liveCaptionText = document.getElementById("liveCaptionText");
+      let liveRunning = false;
+      let liveRecognizer = null;
+
+      function liveListenLoop() {
+        if (!liveRunning) return;
+        if (!SpeechRec) {
+          liveStateHeading.textContent = "Microfone indisponível";
+          liveCaptionText.textContent = "Libere a permissão de microfone no Android / Chrome.";
+          return;
+        }
+        liveStateHeading.textContent = "Ouvindo você...";
+        liveRecognizer = new SpeechRec();
+        liveRecognizer.lang = "pt-BR";
+        liveRecognizer.interimResults = true;
+        liveRecognizer.continuous = false;
+        let heard = "";
+
+        liveRecognizer.onresult = (ev) => {
+          let interim = "";
+          for (let i = ev.resultIndex; i < ev.results.length; i++) {
+            const tr = ev.results[i][0].transcript;
+            if (ev.results[i].isFinal) heard += tr;
+            else interim += tr;
+          }
+          liveCaptionText.textContent = heard || interim || "Ouvindo...";
+        };
+
+        liveRecognizer.onerror = () => {
+          if (liveRunning) setTimeout(liveListenLoop, 600);
+        };
+
+        liveRecognizer.onend = async () => {
+          if (!liveRunning) return;
+          const phrase = heard.trim();
+          if (!phrase) {
+            setTimeout(liveListenLoop, 300);
+            return;
+          }
+          liveStateHeading.textContent = "Respondendo...";
+          const aiReply = await dispatchMessage(phrase, null, { suppressAutoVoice: true });
+          if (!liveRunning) return;
+
+          liveStateHeading.textContent = "Falando...";
+          liveCaptionText.textContent = cleanForSpeech(aiReply).slice(0, 170);
+          speakResponse(aiReply, "live", () => {
+            if (liveRunning) setTimeout(liveListenLoop, 260);
+          });
+        };
+
+        try {
+          liveRecognizer.start();
+        } catch (_) {}
+      }
+
+      function openLiveMode() {
+        drawerBackdrop.classList.add("hidden");
+        plusMenuPopover.classList.add("hidden");
+        stopSpeech();
+        liveRunning = true;
+        liveOverlay.classList.remove("hidden");
+        liveCaptionText.textContent = "Fale naturalmente. Quando terminar, respondo em voz alta e volto a ouvir.";
+        liveListenLoop();
+      }
+
+      document.getElementById("composerLiveBtn").addEventListener("click", openLiveMode);
+      document.getElementById("drawerLiveBtn").addEventListener("click", openLiveMode);
+
+      document.getElementById("closeLiveBtn").addEventListener("click", () => {
+        liveRunning = false;
+        if (liveRecognizer) {
+          try { liveRecognizer.abort(); } catch (_) {}
+        }
+        stopSpeech();
+        liveOverlay.classList.add("hidden");
+      });
+
+      document.getElementById("liveInterruptBtn").addEventListener("click", () => {
+        stopSpeech();
+        if (liveRecognizer) {
+          try { liveRecognizer.abort(); } catch (_) {}
+        }
+        if (liveRunning) setTimeout(liveListenLoop, 180);
+      });
+
+      // ---------------------------------------------------------------------
+      // 7. MENU '≡', 3 MODOS INDEPENDENTES & BOTÃO "LIMPAR"
+      // ---------------------------------------------------------------------
+      function setMode(mode) {
+        currentMode = ["roblox", "media", "chat"].includes(mode) ? mode : "roblox";
+        localStorage.setItem(STORAGE_KEYS.MODE, currentMode);
+        openRetryMsgId = null;
+        slashPopup.classList.add("hidden");
+        plusMenuPopover.classList.add("hidden");
+
+        drawerModeRoblox.classList.toggle("active", currentMode === "roblox");
+        drawerModeMedia.classList.toggle("active", currentMode === "media");
+        drawerModeChat.classList.toggle("active", currentMode === "chat");
+        drawerCmdCount.textContent = String(savedCommands.length);
+
+        if (currentMode === "roblox") {
+          chatInput.placeholder = "Peça script Roblox, GUI, poderes ou /comando...";
+        } else if (currentMode === "media") {
+          chatInput.placeholder = "Peça imagem, roteiro de vídeo, história ou '+' foto...";
+        } else {
+          chatInput.placeholder = "Chat livre: peça de tudo, ideias, textos ou dúvidas...";
+        }
+
+        renderQuickChipsStrip();
+        renderCurrentView();
+      }
+
+      function clearCurrentModeChat() {
+        stopSpeech();
+        messagesByMode[currentMode] = [];
+        openRetryMsgId = null;
+        persistMessages();
+        renderCurrentView();
+        showToast("Conversa limpa");
+      }
+
+      document.getElementById("openDrawerBtn").addEventListener("click", () => {
+        plusMenuPopover.classList.add("hidden");
+        drawerCmdCount.textContent = String(savedCommands.length);
+        drawerBackdrop.classList.remove("hidden");
+      });
+
+      document.getElementById("closeDrawerBtn").addEventListener("click", () => {
+        drawerBackdrop.classList.add("hidden");
+      });
+
+      drawerBackdrop.addEventListener("click", (e) => {
+        if (e.target === drawerBackdrop) drawerBackdrop.classList.add("hidden");
+      });
+
+      drawerModeRoblox.addEventListener("click", () => {
+        setMode("roblox");
+        drawerBackdrop.classList.add("hidden");
+      });
+
+      drawerModeMedia.addEventListener("click", () => {
+        setMode("media");
+        drawerBackdrop.classList.add("hidden");
+      });
+
+      drawerModeChat.addEventListener("click", () => {
+        setMode("chat");
+        drawerBackdrop.classList.add("hidden");
+      });
+
+      document.getElementById("clearConversationBtn").addEventListener("click", clearCurrentModeChat);
+
+      // ---------------------------------------------------------------------
+      // 8. CHIPS RÁPIDOS ACIMA DA BARRA INFERIOR (TAILORED POR MODO)
+      // ---------------------------------------------------------------------
+      function renderQuickChipsStrip() {
+        let chips = [];
+        if (currentMode === "roblox") {
+          chips = [
+            {
+              label: "Script Roblox Standalone",
+              prompt:
+                "Crie um script Lua standalone para Roblox que ativa imediatamente ao ser executado (sem comandos de chat), com painel visual limpo para Speed, Jump e Fly."
+            },
+            {
+              label: "GUI / Menu Jogo",
+              prompt:
+                "Crie um LocalScript completo em Lua para Roblox que gera uma ScreenGui moderna com botões de loja, teleporte e configurações."
+            },
+            {
+              label: "Sistema de Poderes",
+              prompt:
+                "Crie um sistema de poderes elementais em Lua para Roblox com Tool, cooldown, partículas e dano seguro no servidor."
+            },
+            {
+              label: "Corrigir Script",
+              prompt:
+                "Analise e corrija o seguinte script Lua do Roblox indicando exatamente a linha com erro:\n"
+            }
+          ];
+        } else if (currentMode === "media") {
+          chips = [
+            {
+              label: "Criar Imagem",
+              prompt:
+                "Crie uma imagem épica de batalha em arena futurista com efeitos de luz e ação intensa."
+            },
+            {
+              label: "Roteiro de Vídeo",
+              prompt:
+                "Crie um roteiro completo de vídeo viral com gancho nos primeiros 3 segundos, cenas detalhadas, narração e edição."
+            },
+            {
+              label: "Criar História",
+              prompt:
+                "Crie uma história envolvente de aventura e mistério começando pelo Capítulo 1."
+            },
+            {
+              label: "Analisar Foto",
+              action: "plus"
+            }
+          ];
+        } else {
+          chips = [
+            {
+              label: "Pedir Qualquer Coisa",
+              prompt: "Me ajude a resolver uma ideia prática passo a passo com clareza."
+            },
+            {
+              label: "Tirar Dúvida",
+              prompt: "Explique de forma simples e direta como funciona: "
+            },
+            {
+              label: "Escrever Texto",
+              prompt: "Escreva um texto bem estruturado sobre: "
+            },
+            {
+              label: "Anexar Foto / Arquivo",
+              action: "plus"
+            }
+          ];
+        }
+
+        quickChipsStrip.innerHTML = chips
+          .map(
+            (c, i) => `
+            <button type="button" class="mode-chip-pill" data-strip-chip="${i}">
+              <span>${escapeHtml(c.label)}</span>
+            </button>
+          `
+          )
+          .join("");
+
+        quickChipsStrip.querySelectorAll("[data-strip-chip]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const item = chips[Number(btn.getAttribute("data-strip-chip"))];
+            if (!item) return;
+            if (item.action === "plus") {
+              plusMenuPopover.classList.remove("hidden");
+            } else {
+              chatInput.value = item.prompt;
+              chatInput.focus();
+            }
+          });
+        });
+      }
+
+      // ---------------------------------------------------------------------
+      // 9. BOTÃO '+' (CÂMERA, GALERIA / IMAGENS, ARQUIVOS)
+      // ---------------------------------------------------------------------
+      plusMenuBtn.addEventListener("click", () => {
+        slashPopup.classList.add("hidden");
+        plusMenuPopover.classList.toggle("hidden");
+      });
+
+      document.getElementById("plusCameraBtn").addEventListener("click", () => {
+        plusMenuPopover.classList.add("hidden");
+        cameraCaptureInput.click();
+      });
+
+      document.getElementById("plusGalleryBtn").addEventListener("click", () => {
+        plusMenuPopover.classList.add("hidden");
+        galleryImageInput.click();
+      });
+
+      document.getElementById("plusFileBtn").addEventListener("click", () => {
+        plusMenuPopover.classList.add("hidden");
+        docFileInput.click();
+      });
+
+      function handleImageSelection(file, sourceLabel) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const url = String(reader.result);
+          const comma = url.indexOf(",");
+          attachedItem = {
+            type: "image",
+            dataUrl: url,
+            base64: url.slice(comma + 1),
+            mimeType: file.type || "image/jpeg",
+            name: file.name || sourceLabel + ".jpg"
+          };
+          attachThumbImg.src = url;
+          attachThumbImg.classList.remove("hidden");
+          attachFileBadge.classList.add("hidden");
+          attachNameText.textContent = attachedItem.name;
+          attachKindText.textContent = "Imagem (" + sourceLabel + ") pronta para análise";
+          attachmentPreviewBar.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      }
+
+      cameraCaptureInput.addEventListener("change", (e) => {
+        const f = e.target.files && e.target.files[0];
+        handleImageSelection(f, "Câmera");
+      });
+
+      galleryImageInput.addEventListener("change", (e) => {
+        const f = e.target.files && e.target.files[0];
+        handleImageSelection(f, "Galeria");
+      });
+
+      docFileInput.addEventListener("change", (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const content = String(reader.result || "").slice(0, 14000);
+          attachedItem = {
+            type: "file",
+            name: f.name || "script.lua",
+            contentText: content
+          };
+          attachThumbImg.classList.add("hidden");
+          attachFileBadge.classList.remove("hidden");
+          attachNameText.textContent = attachedItem.name;
+          attachKindText.textContent = "Arquivo pronto para envio";
+          attachmentPreviewBar.classList.remove("hidden");
+        };
+        reader.readAsText(f);
+      });
+
+      function clearAttachment() {
+        attachedItem = null;
+        cameraCaptureInput.value = "";
+        galleryImageInput.value = "";
+        docFileInput.value = "";
+        attachmentPreviewBar.classList.add("hidden");
+      }
+
+      removeAttachmentBtn.addEventListener("click", clearAttachment);
+
+      // ---------------------------------------------------------------------
+      // 10. COMANDOS '/'
+      // ---------------------------------------------------------------------
+      const commandsModal = document.getElementById("commandsModal");
+      const commandForm = document.getElementById("commandForm");
+      const editingCmdIndex = document.getElementById("editingCmdIndex");
+      const cmdNameInput = document.getElementById("cmdNameInput");
+      const cmdCategoryInput = document.getElementById("cmdCategoryInput");
+      const cmdBodyInput = document.getElementById("cmdBodyInput");
+      const saveCommandSubmitBtn = document.getElementById("saveCommandSubmitBtn");
+      const cancelEditCmdBtn = document.getElementById("cancelEditCmdBtn");
+      const savedCommandsList = document.getElementById("savedCommandsList");
+
+      function resetCommandForm() {
+        editingCmdIndex.value = "-1";
+        cmdNameInput.value = "";
+        cmdCategoryInput.value = "Roblox Script";
+        cmdBodyInput.value = "";
+        saveCommandSubmitBtn.textContent = "Salvar Comando";
+        cancelEditCmdBtn.classList.add("hidden");
+      }
+
+      function renderCommandsList() {
+        drawerCmdCount.textContent = String(savedCommands.length);
+        if (savedCommands.length === 0) {
+          savedCommandsList.innerHTML = '<p class="field-help">Nenhum comando salvo ainda. Crie um atalho acima.</p>';
+          return;
+        }
+        savedCommandsList.innerHTML = savedCommands
+          .map(
+            (c, idx) => `
+            <div class="saved-cmd-card">
+              <div style="min-width:0;flex:1;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <strong style="font-family:var(--font-mono);font-size:12px;color:var(--badge-text);">${escapeHtml(c.name)}</strong>
+                  <span style="font-size:10px;padding:2px 6px;border-radius:6px;background:var(--bg-input);color:var(--text-secondary);">${escapeHtml(c.category)}</span>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;">${escapeHtml(c.body)}</div>
+              </div>
+              <div style="display:flex;gap:5px;flex-shrink:0;">
+                <button type="button" class="mini-chip-btn accent" data-cmd-use="${idx}">Usar</button>
+                <button type="button" class="mini-chip-btn" data-cmd-edit="${idx}">Editar</button>
+                <button type="button" class="mini-chip-btn" style="color:var(--danger-text);" data-cmd-del="${idx}">Excluir</button>
+              </div>
+            </div>
+          `
+          )
+          .join("");
+
+        savedCommandsList.querySelectorAll("[data-cmd-use]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const cmd = savedCommands[Number(btn.getAttribute("data-cmd-use"))];
+            if (cmd) {
+              commandsModal.classList.add("hidden");
+              chatInput.value = cmd.name + " ";
+              chatInput.focus();
+            }
+          });
+        });
+
+        savedCommandsList.querySelectorAll("[data-cmd-edit]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const idx = Number(btn.getAttribute("data-cmd-edit"));
+            const cmd = savedCommands[idx];
+            if (cmd) {
+              editingCmdIndex.value = String(idx);
+              cmdNameInput.value = cmd.name;
+              cmdCategoryInput.value = cmd.category;
+              cmdBodyInput.value = cmd.body;
+              saveCommandSubmitBtn.textContent = "Atualizar Comando";
+              cancelEditCmdBtn.classList.remove("hidden");
+            }
+          });
+        });
+
+        savedCommandsList.querySelectorAll("[data-cmd-del]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            savedCommands.splice(Number(btn.getAttribute("data-cmd-del")), 1);
+            writeStore(STORAGE_KEYS.COMMANDS, savedCommands);
+            renderCommandsList();
+            showToast("Comando removido");
+          });
+        });
+      }
+
+      document.getElementById("drawerCommandsBtn").addEventListener("click", () => {
+        drawerBackdrop.classList.add("hidden");
+        resetCommandForm();
+        renderCommandsList();
+        commandsModal.classList.remove("hidden");
+      });
+
+      cancelEditCmdBtn.addEventListener("click", resetCommandForm);
+
+      commandForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let name = cmdNameInput.value.trim().toLowerCase().replace(/\s+/g, "_");
+        if (!name.startsWith("/")) name = "/" + name;
+        const category = cmdCategoryInput.value;
+        const body = cmdBodyInput.value.trim();
+        if (!body) return;
+
+        const editIdx = Number(editingCmdIndex.value);
+        if (editIdx >= 0 && savedCommands[editIdx]) {
+          savedCommands[editIdx] = { name, category, body };
+        } else {
+          const exists = savedCommands.findIndex((c) => c.name === name);
+          if (exists >= 0) savedCommands[exists] = { name, category, body };
+          else savedCommands.push({ name, category, body });
+        }
+
+        writeStore(STORAGE_KEYS.COMMANDS, savedCommands);
+        resetCommandForm();
+        renderCommandsList();
+        showToast("Comando salvo");
+      });
+
+      chatInput.addEventListener("input", () => {
+        plusMenuPopover.classList.add("hidden");
+        const val = chatInput.value.trim();
+        if (!val.startsWith("/")) {
+          slashPopup.classList.add("hidden");
+          return;
+        }
+        const matches = savedCommands.filter((c) => c.name.toLowerCase().startsWith(val.toLowerCase()));
+        if (matches.length === 0) {
+          slashPopup.innerHTML = `
+            <button type="button" class="slash-item" id="quickAddCmdBtn">
+              <span style="font-size:12px;font-weight:700;">Criar comando ${escapeHtml(val)}</span>
+              <span class="mini-chip-btn accent">+ Novo</span>
+            </button>
+          `;
+          slashPopup.classList.remove("hidden");
+          document.getElementById("quickAddCmdBtn").addEventListener("click", () => {
+            slashPopup.classList.add("hidden");
+            resetCommandForm();
+            cmdNameInput.value = val;
+            renderCommandsList();
+            commandsModal.classList.remove("hidden");
+          });
+          return;
+        }
+
+        slashPopup.innerHTML = matches
+          .map(
+            (c, i) => `
+            <button type="button" class="slash-item" data-pick-slash="${i}">
+              <div style="min-width:0;flex:1;">
+                <strong style="font-family:var(--font-mono);font-size:12px;color:var(--badge-text);">${escapeHtml(c.name)}</strong>
+                <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(c.body)}</div>
+              </div>
+              <span style="font-size:10.5px;color:var(--text-muted);">${escapeHtml(c.category)}</span>
+            </button>
+          `
+          )
+          .join("");
+        slashPopup.classList.remove("hidden");
+
+        slashPopup.querySelectorAll("[data-pick-slash]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const chosen = matches[Number(btn.getAttribute("data-pick-slash"))];
+            if (chosen) {
+              chatInput.value = chosen.name + " ";
+              slashPopup.classList.add("hidden");
+              chatInput.focus();
+            }
+          });
+        });
+      });
+
+      // ---------------------------------------------------------------------
+      // 11. GERAÇÃO DE IMAGENS ÚNICAS SEM REPETIÇÃO (GEMINI IMAGEN + CANVAS)
+      // ---------------------------------------------------------------------
+      function sanitizeImageSubject(raw) {
+        return (
+          String(raw || "Criação visual personalizada")
+            .replace(/^(crie|gere|faça|faca|cria|gera|nova variação visual diferente \(sem repetir a anterior\) de:)\s*(uma\s+|nova\s+)?imagem\s*(de|do|da)?\s*/i, "")
+            .trim() || "Criação visual personalizada"
+        );
+      }
+
+      function renderCanvasArtworkDataUrl(promptText, variantSeed) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 768;
+        canvas.height = 512;
+        const ctx = canvas.getContext("2d");
+
+        const subject = sanitizeImageSubject(promptText);
+        const effectiveSeed = variantSeed || ((Date.now() % 997) + 1);
+        const seedNum = Array.from(subject + "::" + effectiveSeed).reduce(
+          (acc, ch, idx) => (acc * 41 + ch.charCodeAt(0) * (idx + 5)) % 1000007,
+          31
+        );
+
+        const hueA = seedNum % 360;
+        const hueB = (hueA + 68) % 360;
+        const hueC = (hueA + 154) % 360;
+
+        // Fundo dinâmico único por variação
+        const bgGrad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        bgGrad.addColorStop(0, `hsl(${hueA}, 68%, 12%)`);
+        bgGrad.addColorStop(0.55, `hsl(${hueB}, 62%, 18%)`);
+        bgGrad.addColorStop(1, `hsl(${hueC}, 70%, 10%)`);
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Linhas de grade / profundidade geométrica
+        ctx.strokeStyle = `hsla(${hueB}, 85%, 70%, 0.14)`;
+        ctx.lineWidth = 1.2;
+        const gridStep = 40 + (seedNum % 24);
+        for (let x = 0; x <= canvas.width; x += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
+        }
+        for (let y = 0; y <= canvas.height; y += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+        }
+
+        // Composição geométrica única baseada no assunto e na variação
+        const shapeCount = 7 + (seedNum % 6);
+        const points = [];
+        for (let i = 0; i < shapeCount; i++) {
+          const angle = (((seedNum * (i + 3)) + i * 53) % 360) * (Math.PI / 180);
+          const radiusX = 70 + (((seedNum + i * 37) % 210));
+          const radiusY = 55 + (((seedNum * 3 + i * 29) % 135));
+          const px = canvas.width * 0.5 + Math.cos(angle + i * 0.7) * radiusX;
+          const py = canvas.height * 0.42 + Math.sin(angle * 1.2 + i * 0.9) * radiusY;
+          const pr = 14 + (((seedNum + i * 19) % 44));
+          points.push({ px, py, pr });
+        }
+
+        ctx.strokeStyle = `hsla(${hueA}, 95%, 72%, 0.36)`;
+        ctx.lineWidth = 2.2;
+        for (let i = 0; i < points.length - 1; i++) {
+          ctx.beginPath();
+          ctx.moveTo(points[i].px, points[i].py);
+          ctx.lineTo(points[i + 1].px, points[i + 1].py);
+          ctx.stroke();
+        }
+
+        points.forEach((pt, idx) => {
+          const grad = ctx.createRadialGradient(pt.px - pt.pr * 0.25, pt.py - pt.pr * 0.25, 2, pt.px, pt.py, pt.pr);
+          grad.addColorStop(0, `hsla(${idx % 2 === 0 ? hueA : hueB}, 96%, 75%, 0.92)`);
+          grad.addColorStop(1, `hsla(${hueC}, 86%, 35%, 0.14)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(pt.px, pt.py, pt.pr, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Faixa inferior com o pedido exato do usuário e número da variação
+        ctx.fillStyle = "rgba(4, 7, 14, 0.82)";
+        ctx.fillRect(0, canvas.height - 96, canvas.width, 96);
+
+        ctx.fillStyle = `hsl(${hueB}, 95%, 72%)`;
+        ctx.font = "bold 13px sans-serif";
+        ctx.fillText(`NEURAL IA • VARIAÇÃO #${effectiveSeed}`, 26, canvas.height - 62);
+
+        ctx.fillStyle = "#f8fafc";
+        ctx.font = "600 18px sans-serif";
+        ctx.fillText(subject.slice(0, 62), 26, canvas.height - 28);
+
+        return canvas.toDataURL("image/png");
+      }
+
+      async function generateImageForPrompt(promptText, variantSeed = 0) {
+        const subject = sanitizeImageSubject(promptText);
+        const effectiveSeed = variantSeed || ((Date.now() % 997) + 1);
+        const key = (activeApiKey || DEFAULT_API_KEY).trim();
+
+        if (key) {
+          try {
+            const isStandardKey = key.startsWith("AIza");
+            const imgUrl = isStandardKey
+              ? `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${encodeURIComponent(key)}`
+              : "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict";
+            const headers = { "Content-Type": "application/json" };
+            if (!isStandardKey) {
+              headers["x-goog-api-key"] = key;
+              headers["Authorization"] = "Bearer " + key;
+            }
+            const res = await fetch(imgUrl, {
+              method: "POST",
+              headers,
+              body: JSON.stringify({
+                instances: [
+                  {
+                    prompt: `${subject} — cena exclusiva variação ${effectiveSeed}, iluminação e composição inéditas, alta definição`
+                  }
+                ],
+                parameters: { sampleCount: 1 }
+              })
+            });
+            if (res.ok) {
+              const json = await res.json();
+              const b64 = json?.predictions?.[0]?.bytesBase64Encoded;
+              if (b64) return "data:image/png;base64," + b64;
+            }
+          } catch (_) {}
+        }
+
+        return renderCanvasArtworkDataUrl(subject, effectiveSeed);
+      }
+
+      const imageLightbox = document.getElementById("imageLightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const lightboxDownloadLink = document.getElementById("lightboxDownloadLink");
+
+      function openImageLightbox(dataUrl) {
+        lightboxImg.src = dataUrl;
+        lightboxDownloadLink.href = dataUrl;
+        imageLightbox.classList.remove("hidden");
+      }
+
+      document.getElementById("closeLightboxBtn").addEventListener("click", () => {
+        imageLightbox.classList.add("hidden");
+      });
+
+      imageLightbox.addEventListener("click", (e) => {
+        if (e.target === imageLightbox) imageLightbox.classList.add("hidden");
+      });
+
+      // ---------------------------------------------------------------------
+      // 12. REALCE DE SINTAXE & ACORDEÃO RETRÁTIL DE SCRIPT (v / ^) + CORRIGIR LINHA
+      // ---------------------------------------------------------------------
+      function highlightLine(line) {
+        let code = line;
+        let comment = "";
+        const luaC = line.indexOf("--");
+        const jsC = line.indexOf("//");
+        const pyC = line.trim().startsWith("#") ? line.indexOf("#") : -1;
+
+        let cut = -1;
+        if (luaC !== -1) cut = luaC;
+        else if (jsC !== -1 && !line.includes("://")) cut = jsC;
+        else if (pyC !== -1) cut = pyC;
+
+        if (cut !== -1) {
+          code = line.slice(0, cut);
+          comment = line.slice(cut);
+        }
+
+        let out = escapeHtml(code);
+        out = out.replace(/(&quot;.*?&quot;|&#39;.*?&#39;)/g, '<span style="color:#a3e635;">$1</span>');
+        out = out.replace(
+          /\b(local|function|if|then|else|elseif|end|return|not|or|and|true|false|nil|for|while|do|in|pairs|ipairs|repeat|until|break|const|let|var|async|await|def|class|import|from|elif|None|True|False)\b/g,
+          '<span style="color:#f472b6;font-weight:700;">$1</span>'
+        );
+        out = out.replace(
+          /\b(game|workspace|script|Instance|Vector3|CFrame|Color3|UDim2|Enum|task|wait|print|warn|error|Players|Humanoid|RunService|TweenService|ReplicatedStorage|StarterGui|UserInputService)\b/g,
+          '<span style="color:#38bdf8;">$1</span>'
+        );
+        out = out.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span style="color:#fbbf24;">$1</span>');
+        if (comment) out += `<span style="color:#64748b;font-style:italic;">${escapeHtml(comment)}</span>`;
+        return out || "&nbsp;";
+      }
+
+      function formatAiBody(msgObj) {
+        const rawText = msgObj.text || "";
+        const msgId = msgObj.id;
+
+        let errorLine = null;
+        const mErr = rawText.match(/\[ERRO_LINHA:\s*(\d+)\]/i);
+        if (mErr) errorLine = parseInt(mErr[1], 10);
+
+        const cleaned = rawText.replace(/\[ERRO_LINHA:\s*\d+\]/gi, "").trim();
+        const parts = cleaned.split(/(```[\s\S]*?```|\[IMAGEM_GERADA:\s*[^\]]+\])/gi);
+
+        let htmlOut = parts
+          .map((part, idx) => {
+            const imgTagMatch = part.match(/^\[IMAGEM_GERADA:\s*([^\]]+)\]$/i);
+            if (imgTagMatch) {
+              const imgPrompt = sanitizeImageSubject(imgTagMatch[1].trim());
+              const imgId = `${msgId}_img_${idx}`;
+              const dataUrl =
+                (msgObj.generatedImages && msgObj.generatedImages[imgId]) ||
+                generatedImageStore[imgId] ||
+                renderCanvasArtworkDataUrl(imgPrompt, (idx + 1) * 31);
+              generatedImageStore[imgId] = dataUrl;
+
+              return `
+                <div class="generated-image-card">
+                  <img src="${dataUrl}" alt="${escapeHtml(imgPrompt)}" class="generated-image-preview" data-open-lightbox="${imgId}" />
+                  <div class="generated-image-footer">
+                    <span style="font-size:11px;font-weight:700;color:var(--text-secondary);max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                      ${escapeHtml(imgPrompt)}
+                    </span>
+                    <div style="display:flex;gap:6px;">
+                      <button type="button" class="mini-chip-btn accent" data-var-img="${imgId}" data-img-prompt="${escapeHtml(imgPrompt)}">
+                        Nova variação
+                      </button>
+                      <a href="${dataUrl}" download="neural-ia-${idx}.png" class="mini-chip-btn" style="text-decoration:none;">
+                        ${SVG.download}<span>Baixar</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }
+
+            if (part.startsWith("```") && part.endsWith("```")) {
+              const inner = part.slice(3, -3);
+              const nl = inner.indexOf("\n");
+              const meta = nl > -1 ? inner.slice(0, nl).trim() : "lua";
+              const body = (nl > -1 ? inner.slice(nl + 1) : inner).replace(/\n$/, "");
+              const lines = body.split("\n");
+
+              const metaSplit = meta.split(":");
+              const rawLang = (metaSplit[0] || "lua").trim().toUpperCase();
+              const badgeLabel = rawLang === "LUA" ? "LUA • ROBLOX" : rawLang;
+              const title = metaSplit[1] ? metaSplit[1].trim() : `Script ${rawLang}`;
+
+              const scrId = `${msgId}_s${idx}`;
+              codeStore[scrId] = body;
+
+              if (typeof expandedScripts[scrId] === "undefined") {
+                expandedScripts[scrId] = Boolean(errorLine);
+              }
+              const isOpen = expandedScripts[scrId];
+
+              const linesHtml = lines
+                .map((ln, lIdx) => {
+                  const num = lIdx + 1;
+                  const isErr = errorLine === num;
+                  return `
+                    <div class="code-line ${isErr ? "has-error" : ""}" data-select-line="${num}" data-scr-target="${scrId}" title="Toque para preencher linha ${num}">
+                      <span class="code-line-num">${num}</span>
+                      <span class="code-line-text">${highlightLine(ln)}</span>
+                    </div>
+                  `;
+                })
+                .join("");
+
+              return `
+                <div class="script-accordion" data-scr-box="${scrId}">
+                  <button type="button" class="script-accordion-header" data-toggle-scr="${scrId}" aria-expanded="${isOpen}">
+                    <div class="script-header-left">
+                      <span class="script-lang-badge">${escapeHtml(badgeLabel)}</span>
+                      <div class="script-title-wrap">
+                        <span class="script-title-text">${escapeHtml(title)}</span>
+                        <span class="script-lines-meta">${lines.length} ${lines.length === 1 ? "linha" : "linhas"}${errorLine ? ` • Erro na linha ${errorLine}` : ""}</span>
+                      </div>
+                    </div>
+                    <span class="script-arrow-box" id="arrow_${scrId}">
+                      <span>${isOpen ? "^" : "v"}</span>
+                      ${isOpen ? SVG.arrowUp : SVG.arrowDown}
+                    </span>
+                  </button>
+
+                  <div class="script-accordion-body ${isOpen ? "" : "hidden"}" id="scrBody_${scrId}">
+                    <div class="script-toolbar">
+                      <span style="font-family:var(--font-mono);font-size:11px;color:#94a3b8;">${lines.length} linhas</span>
+                      <button type="button" class="copy-script-btn" data-copy-scr="${scrId}">
+                        ${SVG.copy}
+                        <span>Copiar Script</span>
+                      </button>
+                    </div>
+                    <div class="code-lines-container">${linesHtml}</div>
+                    <div class="surgical-line-bar">
+                      <input type="number" min="1" max="${lines.length}" class="surgical-line-num-input" id="surgNum_${scrId}" placeholder="Linha" value="${errorLine || ""}" />
+                      <input type="text" class="surgical-line-text-input" id="surgNote_${scrId}" placeholder="O que mudar nesta linha?" />
+                      <button type="button" class="surgical-line-btn" data-surgical-submit="${scrId}">Corrigir Linha</button>
+                    </div>
+                    ${
+                      errorLine
+                        ? `<div class="script-error-footer">
+                            <span style="font-size:11px;font-weight:700;color:#fca5a5;display:flex;align-items:center;gap:5px;">
+                              ${SVG.alert} Erro detectado na linha ${errorLine}
+                            </span>
+                            <button type="button" class="fix-line-btn" data-fix-line="${errorLine}">
+                              Corrigir só linha ${errorLine}
+                            </button>
+                          </div>`
+                        : ""
+                    }
+                  </div>
+                </div>
+              `;
+            }
+
+            const paras = part.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+            return paras
+              .map((p) => {
+                const html = escapeHtml(p)
+                  .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                  .replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>')
+                  .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="msg-link">$1</a>')
+                  .replace(/\n/g, "<br />");
+                return `<p>${html}</p>`;
+              })
+              .join("");
+          })
+          .join("");
+
+        if (msgObj.isStory) {
+          htmlOut += `
+            <div class="story-bar">
+              <button type="button" class="mini-chip-btn accent" data-story-continue="1">
+                Continuar
+              </button>
+              <button type="button" class="mini-chip-btn" data-story-twist="1">
+                Reviravolta
+              </button>
+            </div>
+          `;
+        }
+
+        return htmlOut;
+      }
+
+      // ---------------------------------------------------------------------
+      // 13. RENDERIZAÇÃO DA TELA INICIAL POR MODO (3 MODOS INDEPENDENTES) & MENSAGENS
+      // ---------------------------------------------------------------------
+      function renderEmptyState() {
+        if (currentMode === "roblox") {
+          emptyEmblem.innerHTML =
+            '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">' +
+              '<polyline points="16 18 22 12 16 6"/>' +
+              '<polyline points="8 6 2 12 8 18"/>' +
+            '</svg>';
+          emptyTitle.textContent = "Scripts & Roblox";
+          emptyDesc.textContent =
+            "Gere scripts Lua plug-and-play, scripts standalone que ativam na hora, GUIs, ferramentas e mecânicas de jogos em acordeões retráteis (v / ^).";
+
+          const items = [
+            {
+              icon: SVG.zap,
+              title: "Script Roblox Standalone (Ativa na Hora)",
+              sub: "Executa direto sem comandos de chat, com UI limpa",
+              prompt:
+                "Crie um script Lua standalone para Roblox que ativa imediatamente ao ser executado, sem comandos de chat, com painel visual para Speed, Jump e Fly."
+            },
+            {
+              icon: SVG.gamepad,
+              title: "Sistema Completo de Jogo (Roblox Studio)",
+              sub: "Leaderstats, loja, poderes ou teleporte em Lua",
+              prompt:
+                "Crie um sistema completo em Lua para Roblox Studio com Leaderstats (Moedas e Nível), salvamento e botão de loja."
+            },
+            {
+              icon: SVG.code,
+              title: "Corrigir ou Melhorar Script Existente",
+              sub: "Envie o código ou anexe arquivo .lua pelo '+'",
+              prompt:
+                "Analise meu script Lua do Roblox, aponte exatamente a linha com erro e entregue corrigido:\n"
+            }
+          ];
+
+          quickList.innerHTML = items
+            .map(
+              (it, i) => `
+              <button type="button" class="quick-card" data-empty-sug="${i}">
+                <span class="quick-icon">${it.icon}</span>
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:12.5px;font-weight:700;">${escapeHtml(it.title)}</div>
+                  <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(it.sub)}</div>
+                </div>
+              </button>
+            `
+            )
+            .join("");
+
+          quickList.querySelectorAll("[data-empty-sug]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const chosen = items[Number(btn.getAttribute("data-empty-sug"))];
+              chatInput.value = chosen.prompt;
+              chatInput.focus();
+            });
+          });
+        } else if (currentMode === "media") {
+          emptyEmblem.innerHTML =
+            '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">' +
+              '<rect x="3" y="3" width="18" height="18" rx="2"/>' +
+              '<circle cx="8.5" cy="8.5" r="1.5"/>' +
+              '<polyline points="21 15 16 10 5 21"/>' +
+            '</svg>';
+          emptyTitle.textContent = "Imagens, Vídeos & Coisas";
+          emptyDesc.textContent =
+            "Crie imagens na conversa sem repetição, monte roteiros de vídeo, escreva histórias interativas ou envie fotos pelo '+' para análise.";
+
+          const items = [
+            {
+              icon: SVG.image,
+              title: "Criar Imagem na Conversa",
+              sub: "Com Nova variação, tela cheia e download PNG",
+              prompt:
+                "Crie uma imagem cinematográfica de um templo flutuante acima das nuvens ao pôr do sol."
+            },
+            {
+              icon: SVG.video,
+              title: "Roteiro & Storyboard de Vídeo",
+              sub: "Cenas, falas, efeitos e gancho inicial",
+              prompt:
+                "Crie um roteiro completo de vídeo curto com cenas detalhadas, narração e efeitos visuais sobre curiosidades do espaço."
+            },
+            {
+              icon: SVG.story,
+              title: "Criar História Interativa",
+              sub: "Capítulo 1 com botões Continuar e Reviravolta",
+              prompt:
+                "Crie uma história envolvente de ficção e mistério começando pelo Capítulo 1."
+            }
+          ];
+
+          quickList.innerHTML = items
+            .map(
+              (it, i) => `
+              <button type="button" class="quick-card" data-empty-sug="${i}">
+                <span class="quick-icon">${it.icon}</span>
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:12.5px;font-weight:700;">${escapeHtml(it.title)}</div>
+                  <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(it.sub)}</div>
+                </div>
+              </button>
+            `
+            )
+            .join("");
+
+          quickList.querySelectorAll("[data-empty-sug]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const chosen = items[Number(btn.getAttribute("data-empty-sug"))];
+              chatInput.value = chosen.prompt;
+              chatInput.focus();
+            });
+          });
+        } else {
+          emptyEmblem.innerHTML =
+            '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">' +
+              '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>' +
+            '</svg>';
+          emptyTitle.textContent = "Chat Livre";
+          emptyDesc.textContent =
+            "Espaço aberto para pedir qualquer coisa: tirar dúvidas, planejar projetos, escrever textos, resolver problemas ou conversar livremente.";
+
+          const items = [
+            {
+              icon: SVG.sparkles,
+              title: "Pedir Ideias ou Planejamento",
+              sub: "Monte planos, listas ou soluções rápidas para qualquer tema",
+              prompt: "Me dê um plano prático e direto para organizar uma rotina diária de estudos e projetos."
+            },
+            {
+              icon: SVG.chat,
+              title: "Tirar Qualquer Dúvida",
+              sub: "Explicações claras e diretas sem enrolação",
+              prompt: "Explique de forma simples e objetiva: "
+            },
+            {
+              icon: SVG.file,
+              title: "Escrever ou Revisar Textos",
+              sub: "Mensagens, resumos, roteiros ou revisões",
+              prompt: "Escreva um texto claro e bem organizado sobre: "
+            }
+          ];
+
+          quickList.innerHTML = items
+            .map(
+              (it, i) => `
+              <button type="button" class="quick-card" data-empty-sug="${i}">
+                <span class="quick-icon">${it.icon}</span>
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:12.5px;font-weight:700;">${escapeHtml(it.title)}</div>
+                  <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(it.sub)}</div>
+                </div>
+              </button>
+            `
+            )
+            .join("");
+
+          quickList.querySelectorAll("[data-empty-sug]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const chosen = items[Number(btn.getAttribute("data-empty-sug"))];
+              chatInput.value = chosen.prompt;
+              chatInput.focus();
+            });
+          });
+        }
+      }
+
+      function renderCurrentView() {
+        if (currentMode === "roblox") {
+          headerModePill.textContent = "1 • Scripts & Roblox";
+          headerTitle.textContent = "Scripts & Roblox";
+        } else if (currentMode === "media") {
+          headerModePill.textContent = "2 • Imagens, Vídeos & Coisas";
+          headerTitle.textContent = "Imagens, Vídeos & Coisas";
+        } else {
+          headerModePill.textContent = "3 • Chat Livre";
+          headerTitle.textContent = "Chat Livre";
+        }
+
+        const msgs = getCurrentMessages();
+        const hasMsgs = msgs.length > 0;
+        emptyStateView.classList.toggle("hidden", hasMsgs);
+        messagesStack.classList.toggle("hidden", !hasMsgs);
+
+        if (!hasMsgs) {
+          renderEmptyState();
+          messagesStack.innerHTML = "";
+          return;
+        }
+
+        messagesStack.innerHTML = msgs
+          .map((m) => {
+            if (m.sender === "user") {
+              return `
+                <div class="msg-row user">
+                  <div class="msg-bubble-user">
+                    ${m.photoDataUrl ? `<img class="msg-photo-thumb" src="${m.photoDataUrl}" alt="Imagem enviada" />` : ""}
+                    ${
+                      m.fileName
+                        ? `<div class="msg-file-chip">${SVG.file}<span>${escapeHtml(m.fileName)}</span></div>`
+                        : ""
+                    }
+                    <div>${escapeHtml(m.text).replace(/\n/g, "<br />")}</div>
+                  </div>
+                </div>
+              `;
+            }
+
+            const isSpeaking = speakingMsgId === m.id;
+            const isRetryOpen = openRetryMsgId === m.id;
+
+            return `
+              <div class="msg-row ai">
+                <div class="msg-bubble-ai">
+                  <div class="ai-body">${formatAiBody(m)}</div>
+
+                  <div class="msg-actions-bar">
+                    <button type="button" class="msg-action-btn ${isSpeaking ? "speaking" : ""}" data-act-speak="${m.id}">
+                      ${isSpeaking ? SVG.stop : SVG.speaker}
+                      <span>${isSpeaking ? "Parar" : "Ouvir"}</span>
+                    </button>
+
+                    <button type="button" class="msg-action-btn" data-act-copy="${m.id}">
+                      ${SVG.copy}
+                      <span>Copiar</span>
+                    </button>
+
+                    <button type="button" class="msg-action-btn" data-act-share="${m.id}">
+                      ${SVG.share}
+                      <span>Compartilhar</span>
+                    </button>
+
+                    <button type="button" class="msg-action-btn" data-act-retry="${m.id}">
+                      ${SVG.retry}
+                      <span>Corrigir</span>
+                    </button>
+                  </div>
+
+                  ${
+                    isRetryOpen
+                      ? `<div class="inline-retry-box">
+                          <div style="display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:700;">
+                            <span>O que ajustar ou corrigir nesta resposta?</span>
+                            <button type="button" class="mini-chip-btn" data-close-retry="${m.id}">Fechar</button>
+                          </div>
+                          <div class="inline-retry-row">
+                            <button type="button" class="composer-tool-btn" style="width:38px;height:38px;padding:0;" data-retry-voice="${m.id}" title="Falar correção">
+                              ${SVG.mic}
+                            </button>
+                            <input
+                              type="text"
+                              class="inline-retry-input"
+                              id="retryBoxInput_${m.id}"
+                              placeholder="Ex.: Ajuste só a linha 5 ou mude o estilo..."
+                            />
+                            <button type="button" class="inline-retry-submit" data-send-retry="${m.id}">
+                              Aplicar
+                            </button>
+                          </div>
+                        </div>`
+                      : ""
+                  }
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+        messagesStack.querySelectorAll("[data-open-lightbox]").forEach((imgEl) => {
+          imgEl.addEventListener("click", () => {
+            const id = imgEl.getAttribute("data-open-lightbox");
+            if (generatedImageStore[id]) openImageLightbox(generatedImageStore[id]);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-var-img]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const promptAttr = sanitizeImageSubject(btn.getAttribute("data-img-prompt") || "Criação visual");
+            const uniqueSeed = ((Date.now() % 900) + Math.floor(Math.random() * 99) + 1);
+            await dispatchMessage(
+              `Crie uma nova variação visual diferente (sem repetir a anterior) de: ${promptAttr}`,
+              null,
+              { forceImage: true, variantSeed: uniqueSeed, imageSubject: promptAttr }
+            );
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-story-continue]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            dispatchMessage("Continue a história do próximo capítulo mantendo os personagens e o ritmo.", null, { forceStory: true });
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-story-twist]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            dispatchMessage("Crie uma reviravolta surpreendente mudando o rumo da história agora.", null, { forceStory: true });
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-toggle-scr]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-toggle-scr");
+            expandedScripts[id] = !expandedScripts[id];
+            const openNow = expandedScripts[id];
+            const bodyEl = document.getElementById("scrBody_" + id);
+            const arrowEl = document.getElementById("arrow_" + id);
+            if (bodyEl) bodyEl.classList.toggle("hidden", !openNow);
+            if (arrowEl) {
+              arrowEl.innerHTML = `<span>${openNow ? "^" : "v"}</span>${openNow ? SVG.arrowUp : SVG.arrowDown}`;
+            }
+            btn.setAttribute("aria-expanded", String(openNow));
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-copy-scr]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const id = btn.getAttribute("data-copy-scr");
+            if (codeStore[id]) copyText(codeStore[id]);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-select-line]").forEach((lineEl) => {
+          lineEl.addEventListener("click", () => {
+            const num = lineEl.getAttribute("data-select-line");
+            const scrTarget = lineEl.getAttribute("data-scr-target");
+            const numInp = document.getElementById("surgNum_" + scrTarget);
+            const noteInp = document.getElementById("surgNote_" + scrTarget);
+            if (numInp) numInp.value = num;
+            if (noteInp) noteInp.focus();
+            showToast(`Linha ${num} selecionada`);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-surgical-submit]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const scrId = btn.getAttribute("data-surgical-submit");
+            const numInp = document.getElementById("surgNum_" + scrId);
+            const noteInp = document.getElementById("surgNote_" + scrId);
+            const lineNum = numInp ? numInp.value.trim() : "";
+            const note = noteInp ? noteInp.value.trim() : "";
+            if (!lineNum) {
+              showToast("Informe o número da linha");
+              return;
+            }
+            const detail = note ? ` (${note})` : "";
+            dispatchMessage(`Corrija ou modifique apenas a linha ${lineNum}${detail} do script anterior mantendo todas as outras linhas intactas.`);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-fix-line]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const num = btn.getAttribute("data-fix-line");
+            dispatchMessage(`Corrija apenas a linha ${num} do script anterior sem reescrever o restante do código.`);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-act-speak]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const msg = msgs.find((x) => x.id === btn.getAttribute("data-act-speak"));
+            if (msg) speakResponse(msg.text, msg.id);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-act-copy]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const msg = msgs.find((x) => x.id === btn.getAttribute("data-act-copy"));
+            if (msg) copyText(msg.text);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-act-share]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const msg = msgs.find((x) => x.id === btn.getAttribute("data-act-share"));
+            if (msg) shareText(msg.text);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-act-retry]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-act-retry");
+            openRetryMsgId = openRetryMsgId === id ? null : id;
+            renderCurrentView();
+            if (openRetryMsgId) {
+              const inp = document.getElementById("retryBoxInput_" + id);
+              if (inp) inp.focus();
+            }
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-close-retry]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            openRetryMsgId = null;
+            renderCurrentView();
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-retry-voice]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-retry-voice");
+            const inp = document.getElementById("retryBoxInput_" + id);
+            if (inp) runDictation(inp, null);
+          });
+        });
+
+        messagesStack.querySelectorAll("[data-send-retry]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-send-retry");
+            const inp = document.getElementById("retryBoxInput_" + id);
+            const feedback = inp ? inp.value.trim() : "";
+            if (!feedback) {
+              showToast("Digite ou fale o que deseja corrigir");
+              return;
+            }
+            const modeLabel = currentMode === "roblox" ? "Roblox" : currentMode === "media" ? "Criação" : "Chat Livre";
+            learnedMemory.unshift({
+              id: "mem_" + Date.now(),
+              mode: currentMode,
+              modeLabel,
+              note: feedback
+            });
+            learnedMemory = learnedMemory.slice(0, 14);
+            writeStore(STORAGE_KEYS.MEMORY, learnedMemory);
+
+            openRetryMsgId = null;
+            dispatchMessage(`Correção/ajuste na resposta anterior (${feedback}): aplique exatamente isso.`);
+          });
+        });
+
+        chatViewport.scrollTop = chatViewport.scrollHeight;
+      }
+
+      // ---------------------------------------------------------------------
+      // 14. IA ESPECIALIZADA POR MODO (GEMINI v1beta + FALLBACK CONTEXTUAL)
+      // ---------------------------------------------------------------------
+      function buildAdaptivePromptBlock() {
+        if (!learnedMemory.length) return "";
+        const notes = learnedMemory.slice(0, 6).map((n) => `- [${n.mode}] ${n.note}`).join("\n");
+        return `\n\nPreferências e correções aprendidas do usuário:\n${notes}`;
+      }
+
+      function wantsImageGeneration(text, opts = {}) {
+        if (opts.forceImage) return true;
+        return /\b(cria(?:r|e)?\s+(?:uma\s+|nova\s+)?imagem|ger(?:a|ar|e)\s+(?:uma\s+|nova\s+)?imagem|desenh(?:a|ar|e)\s+(?:uma\s+)?imagem|imagem\s+de|ilustra(?:ção|cao|r))\b/i.test(
+          String(text || "")
+        );
+      }
+
+      function wantsStoryGeneration(text, opts = {}) {
+        if (opts.forceStory) return true;
+        return /\b(história|historia|conto|capítulo|capitulo|aventura|ficção|ficcao)\b/i.test(String(text || ""));
+      }
+
+      function smartContextualFallback(mode, text, attachment, opts = {}) {
+        if (attachment && attachment.type === "file") {
+          return (
+            `Li o arquivo **${attachment.name}**:\n\n` +
+            "```lua:" + attachment.name.replace(/\.[^.]+$/, "") + "\n" +
+            attachment.contentText.slice(0, 1200) +
+            "\n```\n\n" +
+            "Pronto! Você pode expandir o painel acima (`v` / `^`), copiar ou indicar uma linha para corrigir."
+          );
+        }
+
+        if (attachment && attachment.type === "image") {
+          return (
+            `Recebi a imagem **${attachment.name}**.\n\n` +
+            "Se quiser que eu extraia o código/erro de um print do Roblox ou gere uma cena inspirada nessa imagem, me diga qual detalhe focar."
+          );
+        }
+
+        if (mode === "roblox") {
+          const low = String(text || "").toLowerCase();
+          if (low.includes("gui") || low.includes("menu")) {
+            return (
+              "Aqui está o LocalScript de GUI moderna para Roblox (toque na barra com **v** para abrir e copiar):\n\n" +
+              "```lua:Menu_GUI_Roblox\n" +
+              "-- LocalScript em StarterPlayerScripts\n" +
+              "local Players = game:GetService(\"Players\")\n" +
+              "local player = Players.LocalPlayer\n" +
+              "local gui = Instance.new(\"ScreenGui\")\n" +
+              "gui.Name = \"NeuralMenuGui\"\n" +
+              "gui.ResetOnSpawn = false\n" +
+              "gui.Parent = player:WaitForChild(\"PlayerGui\")\n\n" +
+              "local frame = Instance.new(\"Frame\")\n" +
+              "frame.Size = UDim2.new(0, 240, 0, 150)\n" +
+              "frame.Position = UDim2.new(0.5, -120, 0.5, -75)\n" +
+              "frame.BackgroundColor3 = Color3.fromRGB(14, 21, 35)\n" +
+              "frame.Parent = gui\n" +
+              "Instance.new(\"UICorner\", frame).CornerRadius = UDim.new(0, 12)\n" +
+              "```"
+            );
+          }
+
+          return (
+            "Script Roblox Standalone pronto (ativa imediatamente ao executar, sem comandos de chat):\n\n" +
+            "```lua:Roblox_Standalone_Hub\n" +
+            "-- Script Standalone Plug-and-Play (Ativa ao executar)\n" +
+            "local Players = game:GetService(\"Players\")\n" +
+            "local player = Players.LocalPlayer\n" +
+            "local char = player.Character or player.CharacterAdded:Wait()\n" +
+            "local hum = char:WaitForChild(\"Humanoid\")\n\n" +
+            "-- Ajuste imediato de velocidade e pulo\n" +
+            "hum.WalkSpeed = 36\n" +
+            "hum.JumpPower = 75\n\n" +
+            "player.CharacterAdded:Connect(function(newChar)\n" +
+            "    local newHum = newChar:WaitForChild(\"Humanoid\")\n" +
+            "    newHum.WalkSpeed = 36\n" +
+            "    newHum.JumpPower = 75\n" +
+            "end)\n" +
+            "```"
+          );
+        }
+
+        if (mode === "media") {
+          if (wantsImageGeneration(text, opts)) {
+            const cleanSubject = sanitizeImageSubject(opts.imageSubject || text || "Criação visual");
+            return (
+              `Aqui está a imagem criada para **${cleanSubject}**:\n\n` +
+              `[IMAGEM_GERADA: ${cleanSubject}]\n\n` +
+              "Toque na imagem para ver em tela cheia, gerar uma **Nova variação** ou baixar PNG."
+            );
+          }
+
+          if (wantsStoryGeneration(text, opts)) {
+            return (
+              `**Capítulo 1 — ${text}**\n\n` +
+              "As luzes da cidade se refletiam nas nuvens baixas enquanto um sinal desconhecido ecoava pelo rádio antigo. Sem hesitar, o protagonista ajustou seu equipamento e seguiu rumo à torre central.\n\n" +
+              "Cada passo revelava pistas de que aquela noite mudaria tudo."
+            );
+          }
+
+          return (
+            `**Roteiro de Vídeo — ${text}**\n\n` +
+            "- **0:00 - 0:03 (Gancho):** Mostre o resultado final logo no primeiro segundo para prender a atenção.\n" +
+            "- **0:03 - 0:18 (Desenvolvimento):** Mostre o passo a passo dinâmico com cortes rápidos e legenda destacada.\n" +
+            "- **0:18 - 0:25 (Final):** Feche com uma pergunta direta para gerar comentários."
+          );
+        }
+
+        // Modo 3: Chat Livre (responde a qualquer pedido de forma aberta e útil)
+        const cleanTopic = String(text || "seu pedido").trim();
+        return (
+          `**Resposta — ${cleanTopic}**\n\n` +
+          "Entendi o que você pediu no Chat Livre. Aqui está um direcionamento claro e prático para avançar:\n\n" +
+          "- **Passo 1:** Defina o objetivo principal e o resultado exato que você quer alcançar.\n" +
+          "- **Passo 2:** Separe os detalhes importantes para evitar retrabalho.\n" +
+          "- **Passo 3:** Se quiser ajustar o tom, aprofundar ou mudar o rumo, é só me dizer aqui."
+        );
+      }
+
+      async function callGemini(mode, sessionMessages, attachment) {
+        throw new Error("API_CONNECTION_PENDING: conexão com IA não configurada nesta versão.");
+        const key = (activeApiKey || DEFAULT_API_KEY).trim();
+        if (!key) throw new Error("NO_API_KEY");
+
+        const isStandardKey = key.startsWith("AIza");
+        const url = isStandardKey
+          ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`
+          : "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+
+        const headers = { "Content-Type": "application/json" };
+        if (!isStandardKey) {
+          headers["x-goog-api-key"] = key;
+          headers["Authorization"] = "Bearer " + key;
+        }
+
+        let baseInstruction = "";
+        if (mode === "roblox") {
+          baseInstruction =
+            "Você é um especialista sênior em programação Lua para Roblox (Roblox Studio, LocalScripts, ServerScripts, ModuleScripts, GUIs, Tools, mecânicas de jogos e scripts standalone que ativam imediatamente ao executar sem depender de comandos de chat). Responda em Português do Brasil (pt-BR). Sempre coloque o código dentro de blocos markdown ```lua:Nome_Do_Script ... ``` para abrir no painel retrátil (v / ^). Se houver erro em alguma linha de script enviado pelo usuário, inclua [ERRO_LINHA: N] e explique de forma objetiva. Se pedir correção cirúrgica de linha, modifique apenas a linha solicitada mantendo o restante igual.";
+        } else if (mode === "media") {
+          baseInstruction =
+            "Você é uma IA especialista em Criação Visual, Imagens, Roteiros de Vídeo e Histórias Interativas em Português do Brasil (pt-BR). Analise com precisão imagens enviadas em inline_data. Quando o usuário pedir para criar ou gerar uma imagem, descreva brevemente a arte exatamente como pedido e inclua a tag [IMAGEM_GERADA: descrição fiel ao pedido do usuário]. Quando pedir vídeo, entregue roteiro completo cena por cena (Gancho, Cenas Visuais, Narração e Efeitos). Quando pedir história, escreva capítulos envolventes fáceis de continuar.";
+        } else {
+          baseInstruction =
+            "Você é um assistente versátil e prestativo no modo Chat Livre em Português do Brasil (pt-BR). Responda a qualquer pergunta, ideia, texto, dúvida ou pedido geral com clareza, naturalidade e utilidade, sem forçar formato de script Roblox nem estrutura fixa de imagem ou história, exceto se o usuário pedir explicitamente.";
+        }
+
+        const systemInstruction = baseInstruction + buildAdaptivePromptBlock();
+
+        const recentMsgs = sessionMessages.slice(-14);
+        const contents = recentMsgs.map((m, idx) => {
+          const isLastUser = idx === recentMsgs.length - 1 && m.sender === "user";
+          const parts = [];
+          if (isLastUser && attachment && attachment.type === "image" && attachment.base64) {
+            parts.push({
+              inline_data: {
+                mime_type: attachment.mimeType || "image/jpeg",
+                data: attachment.base64
+              }
+            });
+          }
+          parts.push({ text: m.apiText || m.text });
+          return {
+            role: m.sender === "user" ? "user" : "model",
+            parts
+          };
+        });
+
+        let backoff = 800;
+        for (let attempt = 0; attempt < 2; attempt++) {
+          const resp = await fetch(url, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+              contents,
+              systemInstruction: { parts: [{ text: systemInstruction }] }
+            })
+          });
+          if (resp.ok) {
+            const data = await resp.json();
+            const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (replyText) return replyText;
+          }
+          await new Promise((r) => setTimeout(r, backoff));
+          backoff *= 2;
+        }
+        throw new Error("API_FAILED");
+      }
+
+      // ---------------------------------------------------------------------
+      // 15. EXPANSÃO DE COMANDOS '/' & ENVIO DE MENSAGENS
+      // ---------------------------------------------------------------------
+      function expandSlash(raw) {
+        const trimmed = raw.trim();
+        if (!trimmed.startsWith("/")) return trimmed;
+        const sp = trimmed.indexOf(" ");
+        const token = (sp === -1 ? trimmed : trimmed.slice(0, sp)).toLowerCase();
+        const extra = sp === -1 ? "" : trimmed.slice(sp + 1).trim();
+
+        const found = savedCommands.find((c) => c.name.toLowerCase() === token);
+        if (!found) return trimmed;
+
+        return (
+          `[Comando ${found.name} • ${found.category}]:\n${found.body}` +
+          (extra ? `\n\nInstrução adicional: ${extra}` : "")
+        );
+      }
+
+      async function dispatchMessage(rawText, attachment, opts = {}) {
+        const msgs = getCurrentMessages();
+        const expanded = expandSlash(rawText);
+
+        let apiCombined = expanded || "";
+        if (attachment && attachment.type === "file") {
+          apiCombined =
+            (apiCombined ? apiCombined + "\n\n" : "") +
+            `[Arquivo anexado: ${attachment.name}]\n\`\`\`\n${attachment.contentText}\n\`\`\``;
+        } else if (attachment && attachment.type === "image" && !apiCombined) {
+          apiCombined = "Analise detalhadamente o que aparece nesta imagem e ajude com o conteúdo dela.";
+        }
+
+        const displayText =
+          rawText ||
+          (attachment && attachment.type === "image"
+            ? `Imagem: ${attachment.name}`
+            : attachment && attachment.type === "file"
+              ? `Arquivo: ${attachment.name}`
+              : "");
+
+        const userMsg = {
+          id: "u_" + Date.now(),
+          sender: "user",
+          text: displayText,
+          apiText: apiCombined,
+          photoDataUrl: attachment && attachment.type === "image" ? attachment.dataUrl : null,
+          fileName: attachment && attachment.type === "file" ? attachment.name : null
+        };
+
+        msgs.push(userMsg);
+        persistMessages();
+        renderCurrentView();
+
+        neuralBadge.classList.add("pulsing");
+        typingLabel.textContent = wantsImageGeneration(apiCombined, opts)
+          ? "Gerando imagem..."
+          : attachment
+            ? attachment.type === "image"
+              ? "Analisando imagem..."
+              : "Lendo arquivo..."
+            : currentMode === "roblox"
+              ? "Gerando script Lua..."
+              : currentMode === "media"
+                ? "Criando..."
+                : "Respondendo...";
+        typingRow.classList.remove("hidden");
+        chatViewport.scrollTop = chatViewport.scrollHeight;
+
+        let reply = "";
+        try {
+          reply = await callGemini(currentMode, msgs, attachment);
+        } catch (_) {
+          reply = smartContextualFallback(currentMode, apiCombined || userMsg.text, attachment, opts);
+        }
+
+        const cleanSubject = sanitizeImageSubject(opts.imageSubject || apiCombined || userMsg.text);
+        if (wantsImageGeneration(apiCombined || userMsg.text, opts) && !/\[IMAGEM_GERADA:\s*[^\]]+\]/i.test(reply)) {
+          reply = `${reply}\n\n[IMAGEM_GERADA: ${cleanSubject}]`;
+        }
+
+        const aiMsgId = "a_" + Date.now();
+        const generatedImages = {};
+        const imgTagMatches = [...reply.matchAll(/\[IMAGEM_GERADA:\s*([^\]]+)\]/gi)];
+        if (imgTagMatches.length > 0) {
+          for (let i = 0; i < imgTagMatches.length; i++) {
+            const pDesc = sanitizeImageSubject(opts.imageSubject || imgTagMatches[i][1].trim());
+            const imgKey = `${aiMsgId}_img_${i * 2 + 1}`;
+            const seed = opts.variantSeed || (((Date.now() % 900) + Math.floor(Math.random() * 97) + i * 37 + 13));
+            const url = await generateImageForPrompt(pDesc, seed);
+            generatedImages[imgKey] = url;
+            generatedImageStore[imgKey] = url;
+          }
+        }
+
+        typingRow.classList.add("hidden");
+        neuralBadge.classList.remove("pulsing");
+
+        const aiMsg = {
+          id: aiMsgId,
+          sender: "ai",
+          text: reply,
+          generatedImages,
+          isStory: currentMode === "media" && wantsStoryGeneration(apiCombined || userMsg.text, opts)
+        };
+
+        msgs.push(aiMsg);
+        persistMessages();
+        renderCurrentView();
+
+        if (autoReadEnabled && !opts.suppressAutoVoice) {
+          speakResponse(reply, aiMsg.id);
+        }
+
+        return reply;
+      }
+
+      chatForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const txt = chatInput.value.trim();
+        if (!txt && !attachedItem) return;
+
+        const attachSnapshot = attachedItem;
+        chatInput.value = "";
+        slashPopup.classList.add("hidden");
+        plusMenuPopover.classList.add("hidden");
+        clearAttachment();
+
+        await dispatchMessage(txt, attachSnapshot);
+      });
+
+      // ---------------------------------------------------------------------
+      // 16. MODAIS: GUIA APK & CONFIGURAÇÕES (API, VOZ & MEMÓRIA)
+      // ---------------------------------------------------------------------
+      const installModal = document.getElementById("installModal");
+      const settingsModal = document.getElementById("settingsModal");
+      const apiKeyField = document.getElementById("apiKeyField");
+      const autoReadToggle = document.getElementById("autoReadToggle");
+      const autoSendVoiceToggle = document.getElementById("autoSendVoiceToggle");
+      const learnedMemoryList = document.getElementById("learnedMemoryList");
+
+      
+
+      function openSettingsModal() {
+        drawerBackdrop.classList.add("hidden");
+        if (apiKeyField) apiKeyField.value = "";
+        autoReadToggle.checked = autoReadEnabled;
+        autoSendVoiceToggle.checked = autoSendVoice;
+        renderLearnedMemory();
+        settingsModal.classList.remove("hidden");
+      }
+
+      function renderLearnedMemory() {
+        if (!learnedMemory.length) {
+          learnedMemoryList.innerHTML =
+            '<p class="field-help">Nenhuma preferência salva ainda. Use "Corrigir" em uma resposta para ensinar a IA.</p>';
+          return;
+        }
+        learnedMemoryList.innerHTML = learnedMemory
+          .map(
+            (item) => {
+              const badge =
+                item.modeLabel ||
+                (item.mode === "roblox" ? "Roblox" : item.mode === "media" ? "Criação" : "Chat Livre");
+              return `<div style="padding:8px 10px;border-radius:10px;background:var(--bg-input);font-size:11.5px;color:var(--text-secondary);">
+                <strong style="color:var(--badge-text);">[${escapeHtml(badge)}]</strong> ${escapeHtml(item.note)}
+              </div>`;
+            }
+          )
+          .join("");
+      }
+
+      document.getElementById("drawerSettingsBtn").addEventListener("click", openSettingsModal);
+
+      document.getElementById("drawerInstallBtn").addEventListener("click", () => {
+        drawerBackdrop.classList.add("hidden");
+        installModal.classList.remove("hidden");
+      });
+
+      document.getElementById("triggerNativeInstallBtn").addEventListener("click", async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        document.getElementById("triggerNativeInstallBtn").classList.add("hidden");
+        installModal.classList.add("hidden");
+      });
+
+      autoReadToggle.addEventListener("change", () => {
+        autoReadEnabled = autoReadToggle.checked;
+        localStorage.setItem(STORAGE_KEYS.AUTO_READ, String(autoReadEnabled));
+        if (!autoReadEnabled) stopSpeech();
+      });
+
+      autoSendVoiceToggle.addEventListener("change", () => {
+        autoSendVoice = autoSendVoiceToggle.checked;
+        localStorage.setItem(STORAGE_KEYS.AUTO_SEND_VOICE, String(autoSendVoice));
+      });
+
+      document.getElementById("clearMemoryBtn").addEventListener("click", () => {
+        learnedMemory = [];
+        writeStore(STORAGE_KEYS.MEMORY, learnedMemory);
+        renderLearnedMemory();
+        showToast("Preferências limpas");
+      });
+
+      document.querySelectorAll("[data-close-modal]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = document.getElementById(btn.getAttribute("data-close-modal"));
+          if (target) target.classList.add("hidden");
+        });
+      });
+
+      [commandsModal, installModal, settingsModal].forEach((modalEl) => {
+        modalEl.addEventListener("click", (e) => {
+          if (e.target === modalEl) modalEl.classList.add("hidden");
+        });
+      });
+
+      // ---------------------------------------------------------------------
+      // 17. INICIALIZAÇÃO
+      // ---------------------------------------------------------------------
+      applyTheme(currentTheme);
+      setMode(currentMode);
+    })();
+  </script>
+</body>
+</html>
